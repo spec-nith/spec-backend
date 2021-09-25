@@ -17,12 +17,7 @@ install: virtualenv
 	@mkdir -p $(shell dirname ${ENV_FILE}) && touch ${ENV_FILE}
 	@echo SECRET_KEY=\"${GET_SECRET_KEY}\" > ${ENV_FILE}
 	@echo "-> Installing Dependencies"
-	@${ACTIVATE} pip install -r etc/requirements.txt
-
-project: install
-	@echo -n "-> Enter Project Name: ";\
-	read PROJECT; \
-	django-admin startproject --template=./etc/structure $${PROJECT} .
+	@${ACTIVATE} pip install -r requirements.txt
 
 migrate:
 	@echo "-> Apply database migrations"
@@ -34,7 +29,7 @@ run:
 
 freeze:
 	@echo "-> Updating Project Requirements"
-	@${ACTIVATE} pip freeze > etc/requirements.txt
+	@${ACTIVATE} pip freeze > requirements.txt
 
 flush:
 	@echo "-> Flushing Database"
@@ -48,3 +43,9 @@ format:
 
 test:
 	@${MANAGE} test
+
+check:
+	@echo "-> Run isort imports ordering validation"
+	@${ACTIVATE} isort --gitignore --check-only .
+	@echo "-> Run black validation"
+	@${ACTIVATE} black --check .
