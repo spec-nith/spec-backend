@@ -45,7 +45,5 @@ test:
 	@${MANAGE} test
 
 check:
-	@echo "-> Run isort imports ordering validation"
-	@${ACTIVATE} isort --gitignore --check-only .
 	@echo "-> Run black validation"
 	@${ACTIVATE} black --check .
