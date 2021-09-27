@@ -34,7 +34,7 @@ class Workshop(models.Model):
         return self.title
 
 
-class Alumni(TeamModel):
+class Alumni(models.Model):
     name = models.CharField(max_length=50, null=False, default=None)
     year = models.IntegerField()
     # choices in charfield #validators
