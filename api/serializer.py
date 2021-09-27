@@ -10,7 +10,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TeamModel.objects.all()
     serializer_class = UserSerializer
 
@@ -22,7 +22,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # ViewSets define the view behavior.
-class BlogViewSet(viewsets.ModelViewSet):
+class BlogViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
@@ -34,7 +34,7 @@ class WorkshopSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # ViewSets define the view behavior.
-class WorkshopViewSet(viewsets.ModelViewSet):
+class WorkshopViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Workshop.objects.all()
     serializer_class = WorkshopSerializer
 
@@ -46,6 +46,6 @@ class AlumniSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # ViewSets define the view behavior.
-class AlumniViewSet(viewsets.ModelViewSet):
+class AlumniViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Alumni.objects.all()
     serializer_class = AlumniSerializer
