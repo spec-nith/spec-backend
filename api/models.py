@@ -30,7 +30,17 @@ class Workshop(models.Model):
     event_date = models.DateTimeField()
     venue = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.title
 
-class Alumni(TeamModel):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+
+class Alumni(models.Model):
+    name = models.CharField(max_length=50, null=False, default=None)
+    year = models.IntegerField()
+    # choices in charfield #validators
+    title = models.CharField(max_length=50, null=False, default=None)
+    github_id = models.URLField(max_length=100, null=True, blank=True)
+    linkedin_id = models.URLField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
