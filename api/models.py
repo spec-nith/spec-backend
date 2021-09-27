@@ -1,4 +1,26 @@
+from uuid import uuid4
+
 from django.db import models
+
+
+def team_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "team/{}.{}".format(uuid4().hex, ext)
+
+
+def blog_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "blogs/{}.{}".format(uuid4().hex, ext)
+
+
+def workshop_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "workshop/{}.{}".format(uuid4().hex, ext)
+
+
+def alumni_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "alumni/{}.{}".format(uuid4().hex, ext)
 
 
 class TeamModel(models.Model):
@@ -20,9 +42,7 @@ class TeamModel(models.Model):
     )
     github_id = models.URLField(max_length=100, null=True, blank=True)
     linkedin_id = models.URLField(max_length=100, null=True, blank=True)
-    image = models.URLField(
-        default="http://uilove.in/realestate/listo/preview/img/profile-placeholder.jpg"
-    )
+    profile_pic = models.ImageField(upload_to=team_upload, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -34,9 +54,7 @@ class Blog(models.Model):
     author = models.CharField(max_length=50)
     body = models.JSONField()
     published = models.DateField(auto_now_add=True)
-    image = models.URLField(
-        default="https://assets.thehansindia.com/h-upload/2021/07/31/1092805-tech.webp"
-    )
+    cover = models.ImageField(upload_to=blog_upload, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -47,10 +65,7 @@ class Workshop(models.Model):
     description = models.CharField(max_length=2000)
     event_date = models.DateTimeField()
     venue = models.CharField(max_length=100)
-    image = models.URLField(
-        max_length=300,
-        default="https://s3.amazonaws.com/thumbnails.venngage.com/template/93542d3a-62a9-4674-a7ed-cb6852d160a3.png",
-    )
+    cover = models.ImageField(upload_to=workshop_upload, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -64,9 +79,7 @@ class Alumni(models.Model):
     company = models.CharField(max_length=100, null=False, default=None)
     github_id = models.URLField(max_length=100, null=True, blank=True)
     linkedin_id = models.URLField(max_length=100, null=True, blank=True)
-    image = models.URLField(
-        default="http://uilove.in/realestate/listo/preview/img/profile-placeholder.jpg"
-    )
+    profile_pic = models.ImageField(upload_to=alumni_upload, null=True, blank=True)
 
     def __str__(self):
         return self.name

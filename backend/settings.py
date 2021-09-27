@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "api",
     "rest_framework",
     "corsheaders",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -141,6 +142,15 @@ REST_FRAMEWORK = {
     ]
 }
 
+# DropBox File Storage
+DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
+DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_OAUTH2_TOKEN")
+
+# CORS Settings
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Media Settings
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 django_heroku.settings(locals())
