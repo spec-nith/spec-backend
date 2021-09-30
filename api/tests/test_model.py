@@ -1,16 +1,17 @@
 from datetime import datetime, timedelta
-# from unittest.mock import patch
-from django.utils import timezone
 
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 
-from api.models import TeamModel, Blog, Workshop, Alumni
+# from unittest.mock import patch
+from django.utils import timezone
+
+from api.models import Alumni, Blog, Gallery, TeamModel, Workshop
 from api.test_settings import common_settings
 
-
 # Create your tests here.
+
 
 @common_settings
 class TeamModelTest(TestCase):
@@ -20,7 +21,7 @@ class TeamModelTest(TestCase):
             name="team user",
             title="Volunteer",
             github_id="https://github.com/tm",
-            linkedin_id = "https://www.linkedin.com/tm"
+            linkedin_id="https://www.linkedin.com/tm",
         )
 
     def test_team_name(self):
@@ -116,9 +117,6 @@ class WorkshopTest(TestCase):
         self.assertEquals(expected_object_name, "workshop description here")
 
     def test_workshop_event_date(self):
-        # workshop = Workshop.objects.get(id=1)
-        # field_label = workshop._meta.get_field('event_date').verbose_name
-        # self.assertEqual(field_label, 'event date')
         workshop = Workshop.objects.get(id=1)
         expected_object_name = f"{workshop.event_date}"
         self.assertEquals(expected_object_name, "2019-09-25 06:00:00+00:00")
@@ -139,6 +137,39 @@ class WorkshopTest(TestCase):
 
 
 @common_settings
+class GalleryTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Gallery.objects.create(
+            event="abc event", date="2019-09-25", sub_event="xyz event"
+        )
+
+    def test_gallery_event(self):
+        gallery = Gallery.objects.get(id=1)
+        expected_object_name = f"{gallery.event}"
+        self.assertEquals(expected_object_name, "abc event")
+
+    def test_gallery_date(self):
+        gallery = Gallery.objects.get(id=1)
+        expected_object_name = f"{gallery.date}"
+        self.assertEquals(expected_object_name, "2019-09-25")
+
+    def test_gallery_sub_event(self):
+        gallery = Gallery.objects.get(id=1)
+        expected_object_name = f"{gallery.sub_event}"
+        self.assertEquals(expected_object_name, "xyz event")
+
+    def test_setup_gallery_image_data(self):
+        file = SimpleUploadedFile(
+            "file.jpg", b"file_content", content_type="image/jpeg"
+        )
+        gallery_image = Gallery.objects.get(id=1)
+        gallery_image.cover = file
+        gallery_image.save()
+        self.assertEquals(Gallery.objects.count(), 1)
+
+
+@common_settings
 class AlumniTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -147,7 +178,7 @@ class AlumniTest(TestCase):
             year="2017",
             company="abc company",
             github_id="https://github.com/abc",
-            linkedin_id = "https://www.linkedin.com/"
+            linkedin_id="https://www.linkedin.com/",
         )
 
     def test_alumni_title(self):
@@ -183,4 +214,3 @@ class AlumniTest(TestCase):
         alumni_image.cover = file
         alumni_image.save()
         self.assertEquals(Alumni.objects.count(), 1)
-
