@@ -3,6 +3,7 @@ from django.urls import include, path
 from rest_framework import routers
 
 from api import views
+from api.models import Gallery
 from api.serializer import (
     AlumniViewSet,
     BlogViewSet,
@@ -22,6 +23,7 @@ router.register("gallery", GalleryViewSet)
 urlpatterns = [
     path("", views.HomeView, name="home"),
     path("gallery/", login_required(views.GalleryFormView.as_view()), name="gallery"),
+    path("index_update/", views.URLUpdateView.as_view(), name="updater"),
     path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls")),
 ]
