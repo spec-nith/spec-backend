@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+# from api.views import save
 from django.db import models
 
 
@@ -16,6 +17,11 @@ def blog_upload(instance, filename):
 def workshop_upload(instance, filename):
     ext = filename.split(".")[-1]
     return "workshop/{}.{}".format(uuid4().hex, ext)
+
+
+def gallery_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "gallery/{}.{}".format(uuid4().hex, ext)
 
 
 def alumni_upload(instance, filename):
@@ -69,6 +75,16 @@ class Workshop(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Gallery(models.Model):
+    event = models.CharField(max_length=50, null=False, default=None)
+    date = models.DateField()
+    sub_event = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to=gallery_upload, null=True, blank=True)
+
+    def __str__(self):
+        return self.event
 
 
 class Alumni(models.Model):
