@@ -37,9 +37,9 @@ flush:
 
 format:
 	@echo "-> Run isort imports ordering validation"
-	@isort --gitignore .
+	@${ACTIVATE} isort --gitignore .
 	@echo "-> Run black validation"
-	@black .
+	@${ACTIVATE} black .
 
 test:
 	@${MANAGE} test
