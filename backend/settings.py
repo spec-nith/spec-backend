@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
-import django_heroku
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -156,5 +155,7 @@ MEDIA_URL = "/media/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+if "DROPBOX_OAUTH2_TOKEN" in os.environ:
+    import django_heroku
 
-django_heroku.settings(locals())
+    django_heroku.settings(locals())

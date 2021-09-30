@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
@@ -23,6 +24,19 @@ class TeamModelTest(TestCase):
             github_id="https://github.com/tm",
             linkedin_id="https://www.linkedin.com/tm",
         )
+
+    def test_team_model_validation_error(self):
+        team = TeamModel.objects.get(id=1)
+        try:
+            team.full_clean()
+        except ValidationError as e:
+            self.fail(e)
+
+        team.github_id = "https://test.com/tm"
+        team.linkedin_id = "https://www.test.com/tm"
+        team.save()
+        team.refresh_from_db()
+        self.assertRaises(ValidationError, team.full_clean)
 
     def test_team_name(self):
         team = TeamModel.objects.get(id=1)
@@ -85,7 +99,7 @@ class BlogTest(TestCase):
         expected_object_name = f"{blog.body}"
         self.assertEquals(expected_object_name, '{"key":"value"}')
 
-    def test_setupimage_data(self):
+    def test_setup_blog_cover_image_data(self):
         file = SimpleUploadedFile(
             "file.jpg", b"file_content", content_type="image/jpeg"
         )
@@ -180,6 +194,19 @@ class AlumniTest(TestCase):
             github_id="https://github.com/abc",
             linkedin_id="https://www.linkedin.com/",
         )
+
+    def test_alumni_validation_error(self):
+        alumni = Alumni.objects.get(id=1)
+        try:
+            alumni.full_clean()
+        except ValidationError as e:
+            self.fail(e)
+
+        alumni.github_id = "https://test.com/tm"
+        alumni.linkedin_id = "https://www.test.com/tm"
+        alumni.save()
+        alumni.refresh_from_db()
+        self.assertRaises(ValidationError, alumni.full_clean)
 
     def test_alumni_title(self):
         alumni = Alumni.objects.get(id=1)
