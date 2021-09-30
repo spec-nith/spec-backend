@@ -32,13 +32,12 @@ class TeamModelTests(APITestCase):
             "title": "volunteer",
             "github_id": "https://github.com/tm",
             "linkedin_id": "https://www.linkedin.com/tm",
-            "profile_pic": None,
+            "profile_pic_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         result = response.json()[0]
-        del result["url"]
         self.assertEqual(result, data)
 
 
@@ -70,14 +69,13 @@ class BlogTests(APITestCase):
             "description": "blog description here",
             "author": "ABC",
             "body": '{"key":"value"}',
-            "cover": None,
+            "cover_url": None,
             "published": date.today().strftime("%Y-%m-%d"),
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         result = response.json()[0]
-        del result["url"]
         self.assertEqual(result, data)
 
 
@@ -97,7 +95,7 @@ class WorkshopTests(APITestCase):
             "title": "first workshop",
             "description": "workshop description here",
             "event_date": "2019-09-25T11:30:00+05:30",
-            "venue": "XYZ",
+            "venue_url": "XYZ",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -109,13 +107,12 @@ class WorkshopTests(APITestCase):
             "description": "workshop description here",
             "event_date": "2019-09-25T11:30:00+05:30",
             "venue": "XYZ",
-            "cover": None,
+            "cover_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         result = response.json()[0]
-        del result["url"]
         self.assertEqual(result, data)
 
 
@@ -138,13 +135,12 @@ class GalleryTests(APITestCase):
             "event": "abc event",
             "date": "2019-09-25",
             "sub_event": "xyz event",
-            "image": None,
+            "image_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         result = response.json()[0]
-        del result["url"]
         self.assertEqual(result, data)
 
 
@@ -180,11 +176,10 @@ class AlumniTests(APITestCase):
             "company": "abc company",
             "github_id": "https://github.com/abc",
             "linkedin_id": "https://www.linkedin.com/",
-            "profile_pic": None,
+            "profile_pic_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         result = response.json()[0]
-        del result["url"]
         self.assertEqual(result, data)
