@@ -45,3 +45,9 @@ jobs:
 
       - name: Validate code format
         run: make check
+
+      - name: Run Test cases
+        run: make test
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
