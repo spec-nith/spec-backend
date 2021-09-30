@@ -77,7 +77,7 @@ class TeamModel(models.Model):
         max_length=100, null=True, blank=True, validators=[validate_linkedin_url]
     )
     profile_pic = models.ImageField(upload_to=team_upload, null=True, blank=True)
-    profile_pic_url = models.URLField(max_length=200, null=True, blank=True)
+    profile_pic_url = models.URLField(max_length=500, null=True, blank=True)
 
     def update_team_image_url(self):
         if self.profile_pic:
@@ -95,7 +95,7 @@ class Blog(models.Model):
     body = models.JSONField()
     published = models.DateField(auto_now_add=True)
     cover = models.ImageField(upload_to=blog_upload, null=True, blank=True)
-    cover_url = models.URLField(max_length=200, null=True, blank=True)
+    cover_url = models.URLField(max_length=500, null=True, blank=True)
 
     def update_blog_cover_url(self):
         if self.cover:
@@ -112,7 +112,7 @@ class Workshop(models.Model):
     event_date = models.DateTimeField()
     venue = models.CharField(max_length=100)
     cover = models.ImageField(upload_to=workshop_upload, null=True, blank=True)
-    cover_url = models.URLField(max_length=200, null=True, blank=True)
+    cover_url = models.URLField(max_length=500, null=True, blank=True)
 
     def update_workshop_cover_url(self):
         if self.cover:
@@ -128,7 +128,7 @@ class Gallery(models.Model):
     sub_event = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateField()
     image = models.ImageField(upload_to=gallery_upload, null=True, blank=True)
-    image_url = models.URLField(max_length=200, null=True, blank=True)
+    image_url = models.URLField(max_length=500, null=True, blank=True)
 
     def update_gallery_image_url(self):
         if self.image:
@@ -152,7 +152,7 @@ class Alumni(models.Model):
         max_length=100, null=True, blank=True, validators=[validate_linkedin_url]
     )
     profile_pic = models.ImageField(upload_to=alumni_upload, null=True, blank=True)
-    profile_pic_url = models.URLField(max_length=200, null=True, blank=True)
+    profile_pic_url = models.URLField(max_length=500, null=True, blank=True)
 
     def update_alumni_image_url(self):
         if self.profile_pic:
