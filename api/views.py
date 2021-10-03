@@ -6,7 +6,7 @@ from django.core.files.images import ImageFile
 from django.shortcuts import HttpResponse
 from django.urls import reverse
 from django.utils.timezone import make_aware
-from django.views.generic import FormView, base
+from django.views.generic import FormView, TemplateView, base
 
 from api import models
 from api.forms import GalleryForm, Upload
@@ -33,8 +33,8 @@ class GalleryFormView(FormView):
         return super().form_valid(form)
 
 
-def HomeView(request):
-    return HttpResponse("<marquee><h2>I'm on</h2></marquee>")
+class Home(TemplateView):
+    template_name = "home.html"
 
 
 class URLUpdateView(base.View):

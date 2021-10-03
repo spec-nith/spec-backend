@@ -21,7 +21,7 @@ router.register("gallery", GalleryViewSet)
 
 
 urlpatterns = [
-    path("", views.HomeView, name="home"),
+    path("", views.Home.as_view(), name="home"),
     path("gallery/", login_required(views.GalleryFormView.as_view()), name="gallery"),
     path("index_update/", views.URLUpdateView.as_view(), name="updater"),
     path("api/", include(router.urls)),
