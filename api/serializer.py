@@ -1,12 +1,13 @@
 from rest_framework import serializers, viewsets
 
-from api.models import Alumni, Blog, Gallery, TeamModel, Workshop
+from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
 
-TEAM_FIELDS = ("name", "title", "github_id", "linkedin_id", "profile_pic_url")
-BLOG_FIELDS = ("title", "description", "body", "author", "published", "cover_url")
-WORKSHOP_FIELDS = ("title", "description", "venue", "event_date", "cover_url")
-GALLERY_FIELDS = ("event", "sub_event", "date", "image_url")
+TEAM_FIELDS = ("id", "name", "title", "github_id", "linkedin_id", "profile_pic_url")
+BLOG_FIELDS = ("id", "title", "description", "body", "author", "published", "cover_url")
+WORKSHOP_FIELDS = ("id", "title", "description", "venue", "event_date", "cover_url")
+GALLERY_FIELDS = ("id", "event", "sub_event", "date", "image_url")
 ALUMNI_FIELDS = (
+    "id",
     "name",
     "year",
     "dual_degree",
@@ -15,19 +16,20 @@ ALUMNI_FIELDS = (
     "linkedin_id",
     "profile_pic_url",
 )
+PROJECT_FIELDS = ("id", "name", "year", "description", "github_link", "cover_url")
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class TeamSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TeamModel
         fields = TEAM_FIELDS
         read_only_fields = TEAM_FIELDS
 
 
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class TeamViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TeamModel.objects.values(*TEAM_FIELDS)
-    serializer_class = UserSerializer
+    serializer_class = TeamSerializer
+    filterset_fields = TEAM_FIELDS
 
 
 class BlogSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,10 +39,10 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = BLOG_FIELDS
 
 
-# ViewSets define the view behavior.
 class BlogViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Blog.objects.values(*BLOG_FIELDS)
     serializer_class = BlogSerializer
+    filterset_fields = ("id", "title", "description", "author", "published")
 
 
 class WorkshopSerializer(serializers.HyperlinkedModelSerializer):
@@ -50,10 +52,10 @@ class WorkshopSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = WORKSHOP_FIELDS
 
 
-# ViewSets define the view behavior.
 class WorkshopViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Workshop.objects.values(*WORKSHOP_FIELDS)
     serializer_class = WorkshopSerializer
+    filterset_fields = WORKSHOP_FIELDS[:-1]
 
 
 class GallerySerializer(serializers.HyperlinkedModelSerializer):
@@ -63,10 +65,10 @@ class GallerySerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = GALLERY_FIELDS
 
 
-# ViewSets define the view behavior.
 class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Gallery.objects.values(*GALLERY_FIELDS)
     serializer_class = GallerySerializer
+    filterset_fields = GALLERY_FIELDS[:-1]
 
 
 class AlumniSerializer(serializers.HyperlinkedModelSerializer):
@@ -77,7 +79,20 @@ class AlumniSerializer(serializers.HyperlinkedModelSerializer):
     read_only_fields = ALUMNI_FIELDS
 
 
-# ViewSets define the view behavior.
 class AlumniViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Alumni.objects.values(*ALUMNI_FIELDS)
     serializer_class = AlumniSerializer
+    filterset_fields = ALUMNI_FIELDS[:-1]
+
+
+class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Project
+        fields = PROJECT_FIELDS
+        read_only_fields = PROJECT_FIELDS
+
+
+class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Project.objects.values(*PROJECT_FIELDS)
+    serializer_class = ProjectSerializer
+    filterset_fields = PROJECT_FIELDS[:-1]

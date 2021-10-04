@@ -2,8 +2,6 @@ from urllib.parse import urlparse
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
-
-# from api.views import save
 from django.db import models
 
 CHOICES = (
@@ -44,9 +42,14 @@ def alumni_upload(instance, filename):
     return "alumni/{}.{}".format(uuid4().hex, ext)
 
 
+def project_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "project/{}.{}".format(uuid4().hex, ext)
+
+
 def validate_github_url(value):
     if not value:
-        return  # Required error is done the field
+        return
     obj = urlparse(value)
     if not obj.hostname in ("github.com"):
         raise ValidationError(f"Only URLs from GitHub are allowed")
@@ -54,19 +57,22 @@ def validate_github_url(value):
 
 def validate_linkedin_url(value):
     if not value:
-        return  # Required error is done the field
+        return
     obj = urlparse(value)
     if not obj.hostname in ("linkedin.com", "www.linkedin.com", "linkedin.in"):
-        raise ValidationError(f"Only URLs from GitHub are allowed")
+        raise ValidationError(f"Only URLs from Linkedin are allowed")
 
 
 class AccessModel(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        AccessModel.objects.all().delete()
+        super(AccessModel, self).save(*args, **kwargs)
+
 
 class TeamModel(models.Model):
     name = models.CharField(max_length=50, null=False, default=None)
-    # choices in charfield #validators
     title = models.CharField(
         max_length=50, choices=CHOICES, null=False, default="Volunteer"
     )
@@ -143,7 +149,6 @@ class Alumni(models.Model):
     name = models.CharField(max_length=50, null=False, default=None)
     year = models.IntegerField()
     dual_degree = models.BooleanField(default=False)
-    # choices in charfield #validators
     company = models.CharField(max_length=100, null=False, default=None)
     github_id = models.URLField(
         max_length=100, null=True, blank=True, validators=[validate_github_url]
@@ -157,6 +162,25 @@ class Alumni(models.Model):
     def update_alumni_image_url(self):
         if self.profile_pic:
             self.profile_pic_url = self.profile_pic.url
+            self.save()
+
+    def __str__(self):
+        return self.name
+
+
+class Project(models.Model):
+    name = models.CharField(max_length=50, null=False, default=None)
+    description = models.CharField(max_length=2000)
+    year = models.DateField()
+    github_link = models.URLField(
+        max_length=100, null=True, blank=True, validators=[validate_github_url]
+    )
+    cover = models.ImageField(upload_to=project_upload, null=True, blank=True)
+    cover_url = models.URLField(max_length=500, null=True, blank=True)
+
+    def update_project_cover_url(self):
+        if self.cover:
+            self.cover_url = self.cover.url
             self.save()
 
     def __str__(self):

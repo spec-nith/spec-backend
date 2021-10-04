@@ -7,16 +7,18 @@ from api.serializer import (
     AlumniViewSet,
     BlogViewSet,
     GalleryViewSet,
-    UserViewSet,
+    ProjectViewSet,
+    TeamViewSet,
     WorkshopViewSet,
 )
 
 router = routers.DefaultRouter()
-router.register("team", UserViewSet)
+router.register("team", TeamViewSet)
 router.register("workshop", WorkshopViewSet)
 router.register("blog", BlogViewSet)
 router.register("alumni", AlumniViewSet)
 router.register("gallery", GalleryViewSet)
+router.register("project", ProjectViewSet)
 
 
 urlpatterns = [
