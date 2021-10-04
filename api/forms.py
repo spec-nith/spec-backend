@@ -2,10 +2,10 @@ from django import forms
 
 
 class GalleryForm(forms.Form):
-    zip_import = forms.FileField(label="zip_import")
-    event = forms.CharField(max_length=100, label="event")
-    sub_event = forms.CharField(max_length=100, label="sub_event", required=False)
-    date = forms.DateField()
+    event = forms.CharField(max_length=100, label="Event")
+    sub_event = forms.CharField(max_length=100, label="Sub Event", required=False)
+    date = forms.DateField(widget=forms.widgets.DateInput(attrs={"type": "date"}))
+    zip_import = forms.FileField(label="Zip File")
 
     def __str__(self):
         return self.event

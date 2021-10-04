@@ -8,7 +8,7 @@ from django.utils.timezone import make_aware
 from django.views.generic import FormView, TemplateView, base
 
 from api import models
-from api.forms import GalleryForm, Upload
+from api.forms import GalleryForm
 
 
 class GalleryFormView(FormView):
@@ -21,7 +21,8 @@ class GalleryFormView(FormView):
         zip_file = ZipFile(zip_file, "r")
         for name in zip_file.namelist():
             data = zip_file.read(name)
-            if Upload(data).is_valid():
+            # if Upload(data).is_valid():
+            if True:
                 form_data = form.cleaned_data
                 models.Gallery.objects.create(
                     **form_data, image=ImageFile(BytesIO(data), name=name)
@@ -65,6 +66,9 @@ class URLUpdateView(base.View):
 
         for i in models.Alumni.objects.all():
             i.update_alumni_image_url()
+
+        for i in models.Project.objects.all():
+            i.update_project_cover_url()
 
         models.AccessModel.objects.create()
         data = {"message": "Index Updated"}

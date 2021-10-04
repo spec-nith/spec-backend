@@ -1,16 +1,13 @@
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files import File
 from django.test import TestCase
 
-from api.models import Alumni, Blog, Gallery, TeamModel, Workshop
+from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
 from api.test_settings import common_settings
 
-# from unittest.mock import patch
-
+DUMMY_PATH = "api/tests/dummy/test_image.png"
 
 # Create your tests here.
-
-
 @common_settings
 class TeamModelTest(TestCase):
     @classmethod
@@ -20,6 +17,7 @@ class TeamModelTest(TestCase):
             title="Volunteer",
             github_id="https://github.com/tm",
             linkedin_id="https://www.linkedin.com/tm",
+            profile_pic=File(open(DUMMY_PATH, "rb")),
         )
 
     def test_team_model_validation_error(self):
@@ -55,14 +53,12 @@ class TeamModelTest(TestCase):
         expected_object_name = f"{team.linkedin_id}"
         self.assertEquals(expected_object_name, "https://www.linkedin.com/tm")
 
-    def test_setup_team_profile_image_data(self):
-        file = SimpleUploadedFile(
-            "file.jpg", b"file_content", content_type="image/jpeg"
-        )
-        team_image = TeamModel.objects.get(id=1)
-        team_image.cover = file
-        team_image.save()
-        self.assertEquals(TeamModel.objects.count(), 1)
+    def test_team_profile_pic(self):
+        team = TeamModel.objects.get(id=1)
+        team.update_team_image_url()
+        team.refresh_from_db()
+        expected_object_name = f"{team.profile_pic.url}"
+        self.assertEquals(expected_object_name, team.profile_pic_url)
 
 
 @common_settings
@@ -74,6 +70,7 @@ class BlogTest(TestCase):
             description="blog description here",
             author="ABC",
             body='{"key":"value"}',
+            cover=File(open(DUMMY_PATH, "rb")),
         )
 
     def test_blog_title(self):
@@ -96,14 +93,12 @@ class BlogTest(TestCase):
         expected_object_name = f"{blog.body}"
         self.assertEquals(expected_object_name, '{"key":"value"}')
 
-    def test_setup_blog_cover_image_data(self):
-        file = SimpleUploadedFile(
-            "file.jpg", b"file_content", content_type="image/jpeg"
-        )
-        blog_image = Blog.objects.get(id=1)
-        blog_image.cover = file
-        blog_image.save()
-        self.assertEquals(Blog.objects.count(), 1)
+    def test_blog_cover(self):
+        blog = Blog.objects.get(id=1)
+        blog.update_blog_cover_url()
+        blog.refresh_from_db()
+        expected_object_name = f"{blog.cover.url}"
+        self.assertEquals(expected_object_name, blog.cover_url)
 
 
 @common_settings
@@ -115,6 +110,7 @@ class WorkshopTest(TestCase):
             description="workshop description here",
             event_date="2019-09-25 06:00:00+00:00",
             venue="XYZ",
+            cover=File(open(DUMMY_PATH, "rb")),
         )
 
     def test_workshop_title(self):
@@ -137,14 +133,12 @@ class WorkshopTest(TestCase):
         expected_object_name = f"{workshop.venue}"
         self.assertEquals(expected_object_name, "XYZ")
 
-    def test_setup_workshop_image_data(self):
-        file = SimpleUploadedFile(
-            "file.jpg", b"file_content", content_type="image/jpeg"
-        )
-        workshop_image = Workshop.objects.get(id=1)
-        workshop_image.cover = file
-        workshop_image.save()
-        self.assertEquals(Workshop.objects.count(), 1)
+    def test_workshop_cover(self):
+        workshop = Workshop.objects.get(id=1)
+        workshop.update_workshop_cover_url()
+        workshop.refresh_from_db()
+        expected_object_name = f"{workshop.cover.url}"
+        self.assertEquals(expected_object_name, workshop.cover_url)
 
 
 @common_settings
@@ -152,7 +146,10 @@ class GalleryTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Gallery.objects.create(
-            event="abc event", date="2019-09-25", sub_event="xyz event"
+            event="abc event",
+            date="2019-09-25",
+            sub_event="xyz event",
+            image=File(open(DUMMY_PATH, "rb")),
         )
 
     def test_gallery_event(self):
@@ -160,24 +157,22 @@ class GalleryTest(TestCase):
         expected_object_name = f"{gallery.event}"
         self.assertEquals(expected_object_name, "abc event")
 
-    def test_gallery_date(self):
-        gallery = Gallery.objects.get(id=1)
-        expected_object_name = f"{gallery.date}"
-        self.assertEquals(expected_object_name, "2019-09-25")
-
     def test_gallery_sub_event(self):
         gallery = Gallery.objects.get(id=1)
         expected_object_name = f"{gallery.sub_event}"
         self.assertEquals(expected_object_name, "xyz event")
 
-    def test_setup_gallery_image_data(self):
-        file = SimpleUploadedFile(
-            "file.jpg", b"file_content", content_type="image/jpeg"
-        )
-        gallery_image = Gallery.objects.get(id=1)
-        gallery_image.cover = file
-        gallery_image.save()
-        self.assertEquals(Gallery.objects.count(), 1)
+    def test_gallery_date(self):
+        gallery = Gallery.objects.get(id=1)
+        expected_object_name = f"{gallery.date}"
+        self.assertEquals(expected_object_name, "2019-09-25")
+
+    def test_gallery_image(self):
+        gallery = Gallery.objects.get(id=1)
+        gallery.update_gallery_image_url()
+        gallery.refresh_from_db()
+        expected_object_name = f"{gallery.image.url}"
+        self.assertEquals(expected_object_name, gallery.image_url)
 
 
 @common_settings
@@ -190,6 +185,7 @@ class AlumniTest(TestCase):
             company="abc company",
             github_id="https://github.com/abc",
             linkedin_id="https://www.linkedin.com/",
+            profile_pic=File(open(DUMMY_PATH, "rb")),
         )
 
     def test_alumni_validation_error(self):
@@ -230,11 +226,49 @@ class AlumniTest(TestCase):
         expected_object_name = f"{alumni.linkedin_id}"
         self.assertEquals(expected_object_name, "https://www.linkedin.com/")
 
-    def test_setup_alumni_profile_image_data(self):
-        file = SimpleUploadedFile(
-            "file.jpg", b"file_content", content_type="image/jpeg"
+    def test_alumni_profile_pic(self):
+        alumni = Alumni.objects.get(id=1)
+        alumni.update_alumni_image_url()
+        alumni.refresh_from_db()
+        expected_object_name = f"{alumni.profile_pic.url}"
+        self.assertEquals(expected_object_name, alumni.profile_pic_url)
+
+
+@common_settings
+class ProjectTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Project.objects.create(
+            name="first project",
+            description="project description here",
+            year="2019-09-25",
+            github_link="https://github.com/project",
+            cover=File(open(DUMMY_PATH, "rb")),
         )
-        alumni_image = Alumni.objects.get(id=1)
-        alumni_image.cover = file
-        alumni_image.save()
-        self.assertEquals(Alumni.objects.count(), 1)
+
+    def test_project_name(self):
+        project = Project.objects.get(id=1)
+        expected_object_name = f"{project.name}"
+        self.assertEquals(expected_object_name, "first project")
+
+    def test_project_description(self):
+        project = Project.objects.get(id=1)
+        expected_object_name = f"{project.description}"
+        self.assertEquals(expected_object_name, "project description here")
+
+    def test_project_year(self):
+        project = Project.objects.get(id=1)
+        expected_object_name = f"{project.year}"
+        self.assertEquals(expected_object_name, "2019-09-25")
+
+    def test_project_github_link(self):
+        project = Project.objects.get(id=1)
+        expected_object_name = f"{project.github_link}"
+        self.assertEquals(expected_object_name, "https://github.com/project")
+
+    def test_project_cover(self):
+        project = Project.objects.get(id=1)
+        project.update_project_cover_url()
+        project.refresh_from_db()
+        expected_object_name = f"{project.cover.url}"
+        self.assertEquals(expected_object_name, project.cover_url)
