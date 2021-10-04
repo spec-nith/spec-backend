@@ -18,7 +18,7 @@ router.register("workshop", WorkshopViewSet)
 router.register("blog", BlogViewSet)
 router.register("alumni", AlumniViewSet)
 router.register("gallery", GalleryViewSet)
-router.register("project", ProjectViewSet)
+router.register("projects", ProjectViewSet)
 
 
 urlpatterns = [
