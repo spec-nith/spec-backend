@@ -43,7 +43,7 @@ flush:
 
 format:
 	@echo "-> Run autoflake to remove unused imports"
-	@autoflake ${AUTOFLAKE_ARGS} api backend
+	@${ACTIVATE}autoflake ${AUTOFLAKE_ARGS} api backend
 	@echo "-> Run isort imports ordering validation"
 	@${ACTIVATE} isort --gitignore --profile black .
 	@echo "-> Run black validation"
