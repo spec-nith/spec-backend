@@ -3,7 +3,7 @@ from datetime import date
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from api.models import Alumni, Blog, Gallery, TeamModel, Workshop, Project
+from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
 
 
 class TeamModelTests(APITestCase):
@@ -189,6 +189,7 @@ class AlumniTests(APITestCase):
         result = response.json()[0]
         self.assertEqual(result, data)
 
+
 class ProjectTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
@@ -219,11 +220,10 @@ class ProjectTests(APITestCase):
             "description": "project description here",
             "year": "2019-09-25",
             "github_link": "https://github.com/project",
-            "cover_url": None
+            "cover_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         result = response.json()[0]
         self.assertEqual(result, data)
-
