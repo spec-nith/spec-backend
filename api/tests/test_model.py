@@ -1,15 +1,12 @@
-from datetime import datetime, timedelta
-
 from django.core.exceptions import ValidationError
-from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase, override_settings
-
-# from unittest.mock import patch
-from django.utils import timezone
+from django.test import TestCase
 
 from api.models import Alumni, Blog, Gallery, TeamModel, Workshop
 from api.test_settings import common_settings
+
+# from unittest.mock import patch
+
 
 # Create your tests here.
 

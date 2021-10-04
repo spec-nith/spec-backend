@@ -24,12 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # Environment
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEVELOPMENT", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "127.0.0.1",
+    "localhost",
+    "spec-backend.herokuapp.com",
+]
 
 
 # Application definition
@@ -45,6 +50,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "storages",
+    "sslserver",
 ]
 
 MIDDLEWARE = [
@@ -128,6 +134,11 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+STATIC_ROOT = "/var/scancodeio/static/"
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -141,10 +152,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-# DropBox File Storage
-DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
-DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_OAUTH2_TOKEN")
-
 # CORS Settings
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -155,7 +162,21 @@ MEDIA_URL = "/media/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-if "DROPBOX_OAUTH2_TOKEN" in os.environ:
+if not DEBUG:
     import django_heroku
+
+    # DropBox File Storage
+    DEFAULT_FILE_STORAGE = "storages.backends.dropbox.DropBoxStorage"
+    DROPBOX_OAUTH2_TOKEN = os.getenv("DROPBOX_OAUTH2_TOKEN")
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = "DENY"
 
     django_heroku.settings(locals())
