@@ -1,10 +1,9 @@
-from datetime import date, datetime
+from datetime import datetime
 from io import BytesIO
 from zipfile import ZipFile
 
 from django.core.files.images import ImageFile
 from django.shortcuts import HttpResponse
-from django.urls import reverse
 from django.utils.timezone import make_aware
 from django.views.generic import FormView, TemplateView, base
 
