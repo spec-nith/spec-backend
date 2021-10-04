@@ -5,7 +5,7 @@ from django.test import TestCase
 from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
 from api.test_settings import common_settings
 
-DUMMY_PATH = "api/tests/dummy/test_image.png"
+DUMMY_PATH = "api/tests/dummy/test_image.jpeg"
 
 # Create your tests here.
 @common_settings
