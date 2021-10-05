@@ -44,7 +44,7 @@ def alumni_upload(instance, filename):
 
 def project_upload(instance, filename):
     ext = filename.split(".")[-1]
-    return "project/{}.{}".format(uuid4().hex, ext)
+    return "projects/{}.{}".format(uuid4().hex, ext)
 
 
 def validate_github_url(value):
@@ -76,6 +76,7 @@ class TeamModel(models.Model):
     title = models.CharField(
         max_length=50, choices=CHOICES, null=False, default="Volunteer"
     )
+    description = models.TextField(null=True, blank=True)
     github_id = models.URLField(
         max_length=100, null=True, blank=True, validators=[validate_github_url]
     )
@@ -96,7 +97,7 @@ class TeamModel(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=500)
-    description = models.CharField(max_length=2000)
+    description = models.TextField()
     author = models.CharField(max_length=50)
     body = models.JSONField()
     published = models.DateField(auto_now_add=True)
@@ -114,7 +115,7 @@ class Blog(models.Model):
 
 class Workshop(models.Model):
     title = models.CharField(max_length=500)
-    description = models.CharField(max_length=2000)
+    description = models.TextField()
     event_date = models.DateTimeField()
     venue = models.CharField(max_length=100)
     cover = models.ImageField(upload_to=workshop_upload, null=True, blank=True)
@@ -132,7 +133,7 @@ class Workshop(models.Model):
 class Gallery(models.Model):
     event = models.CharField(max_length=50, null=False, default=None)
     sub_event = models.CharField(max_length=100, blank=True, null=True)
-    date = models.DateField()
+    year = models.PositiveIntegerField(null=True, blank=True)
     image = models.ImageField(upload_to=gallery_upload, null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)
 
@@ -147,7 +148,7 @@ class Gallery(models.Model):
 
 class Alumni(models.Model):
     name = models.CharField(max_length=50, null=False, default=None)
-    year = models.IntegerField()
+    batch = models.PositiveIntegerField(null=True, blank=True)
     dual_degree = models.BooleanField(default=False)
     company = models.CharField(max_length=100, null=False, default=None)
     github_id = models.URLField(
@@ -169,9 +170,10 @@ class Alumni(models.Model):
 
 
 class Project(models.Model):
+    domain = models.CharField(max_length=50, null=False, default=None)
     name = models.CharField(max_length=50, null=False, default=None)
-    description = models.CharField(max_length=2000)
-    year = models.DateField()
+    description = models.TextField()
+    year = models.PositiveIntegerField(null=True, blank=True)
     github_link = models.URLField(
         max_length=100, null=True, blank=True, validators=[validate_github_url]
     )

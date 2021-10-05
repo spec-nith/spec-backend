@@ -15,6 +15,7 @@ class TeamModelTest(TestCase):
         TeamModel.objects.create(
             name="team user",
             title="Volunteer",
+            description="skills",
             github_id="https://github.com/tm",
             linkedin_id="https://www.linkedin.com/tm",
             profile_pic=File(open(DUMMY_PATH, "rb")),
@@ -42,6 +43,11 @@ class TeamModelTest(TestCase):
         team = TeamModel.objects.get(id=1)
         expected_object_name = f"{team.title}"
         self.assertEquals(expected_object_name, "Volunteer")
+
+    def test_team_description(self):
+        team = TeamModel.objects.get(id=1)
+        expected_object_name = f"{team.description}"
+        self.assertEquals(expected_object_name, "skills")
 
     def test_team_github_id(self):
         team = TeamModel.objects.get(id=1)
@@ -147,7 +153,7 @@ class GalleryTest(TestCase):
     def setUpTestData(cls):
         Gallery.objects.create(
             event="abc event",
-            date="2019-09-25",
+            year="2019",
             sub_event="xyz event",
             image=File(open(DUMMY_PATH, "rb")),
         )
@@ -162,10 +168,10 @@ class GalleryTest(TestCase):
         expected_object_name = f"{gallery.sub_event}"
         self.assertEquals(expected_object_name, "xyz event")
 
-    def test_gallery_date(self):
+    def test_gallery_year(self):
         gallery = Gallery.objects.get(id=1)
-        expected_object_name = f"{gallery.date}"
-        self.assertEquals(expected_object_name, "2019-09-25")
+        expected_object_name = f"{gallery.year}"
+        self.assertEquals(expected_object_name, "2019")
 
     def test_gallery_image(self):
         gallery = Gallery.objects.get(id=1)
@@ -181,7 +187,7 @@ class AlumniTest(TestCase):
     def setUpTestData(cls):
         Alumni.objects.create(
             name="alumni user",
-            year="2017",
+            batch="2017",
             company="abc company",
             github_id="https://github.com/abc",
             linkedin_id="https://www.linkedin.com/",
@@ -206,9 +212,9 @@ class AlumniTest(TestCase):
         expected_object_name = f"{alumni.name}"
         self.assertEquals(expected_object_name, "alumni user")
 
-    def test_alumni_year(self):
+    def test_alumni_batch(self):
         alumni = Alumni.objects.get(id=1)
-        expected_object_name = f"{alumni.year}"
+        expected_object_name = f"{alumni.batch}"
         self.assertEquals(expected_object_name, "2017")
 
     def test_alumni_company(self):
@@ -239,12 +245,18 @@ class ProjectTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Project.objects.create(
+            domain="project domain",
             name="first project",
             description="project description here",
-            year="2019-09-25",
+            year="2019",
             github_link="https://github.com/project",
             cover=File(open(DUMMY_PATH, "rb")),
         )
+
+    def test_project_domain(self):
+        project = Project.objects.get(id=1)
+        expected_object_name = f"{project.domain}"
+        self.assertEquals(expected_object_name, "project domain")
 
     def test_project_name(self):
         project = Project.objects.get(id=1)
@@ -259,7 +271,7 @@ class ProjectTest(TestCase):
     def test_project_year(self):
         project = Project.objects.get(id=1)
         expected_object_name = f"{project.year}"
-        self.assertEquals(expected_object_name, "2019-09-25")
+        self.assertEquals(expected_object_name, "2019")
 
     def test_project_github_link(self):
         project = Project.objects.get(id=1)
