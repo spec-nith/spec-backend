@@ -24,7 +24,7 @@ install: virtualenv
 
 migrate:
 	@echo "-> Apply database migrations"
-	${MANAGE} makemigrations
+	${MANAGE} makemigrations api
 	${MANAGE} migrate
 
 run:
