@@ -6,7 +6,6 @@ TEAM_FIELDS = (
     "id",
     "name",
     "title",
-    "description",
     "github_id",
     "linkedin_id",
     "profile_pic_url",

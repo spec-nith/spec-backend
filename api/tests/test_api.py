@@ -12,7 +12,6 @@ class TeamModelTests(APITestCase):
         TeamModel.objects.create(
             name="team member",
             title="volunteer",
-            description="skills",
             github_id="https://github.com/tm",
             linkedin_id="https://www.linkedin.com/tm",
             profile_pic=None,
@@ -30,7 +29,6 @@ class TeamModelTests(APITestCase):
             "id": 1,
             "name": "team member",
             "title": "volunteer",
-            "description": "skills",
             "github_id": "https://github.com/tm",
             "linkedin_id": "https://www.linkedin.com/tm",
             "profile_pic_url": None,

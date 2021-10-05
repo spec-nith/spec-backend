@@ -15,7 +15,6 @@ class TeamModelTest(TestCase):
         TeamModel.objects.create(
             name="team user",
             title="Volunteer",
-            description="skills",
             github_id="https://github.com/tm",
             linkedin_id="https://www.linkedin.com/tm",
             profile_pic=File(open(DUMMY_PATH, "rb")),
@@ -43,11 +42,6 @@ class TeamModelTest(TestCase):
         team = TeamModel.objects.get(id=1)
         expected_object_name = f"{team.title}"
         self.assertEquals(expected_object_name, "Volunteer")
-
-    def test_team_description(self):
-        team = TeamModel.objects.get(id=1)
-        expected_object_name = f"{team.description}"
-        self.assertEquals(expected_object_name, "skills")
 
     def test_team_github_id(self):
         team = TeamModel.objects.get(id=1)

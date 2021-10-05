@@ -76,7 +76,6 @@ class TeamModel(models.Model):
     title = models.CharField(
         max_length=50, choices=CHOICES, null=False, default="Volunteer"
     )
-    description = models.TextField(null=True, blank=True)
     github_id = models.URLField(
         max_length=100, null=True, blank=True, validators=[validate_github_url]
     )
