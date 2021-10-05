@@ -12,6 +12,7 @@ class TeamModelTests(APITestCase):
         TeamModel.objects.create(
             name="team member",
             title="volunteer",
+            description="skills",
             github_id="https://github.com/tm",
             linkedin_id="https://www.linkedin.com/tm",
             profile_pic=None,
@@ -29,6 +30,7 @@ class TeamModelTests(APITestCase):
             "id": 1,
             "name": "team member",
             "title": "volunteer",
+            "description": "skills",
             "github_id": "https://github.com/tm",
             "linkedin_id": "https://www.linkedin.com/tm",
             "profile_pic_url": None,
@@ -121,13 +123,11 @@ class WorkshopTests(APITestCase):
 class GalleryTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        Gallery.objects.create(
-            event="abc event", date="2019-09-25", sub_event="xyz event"
-        )
+        Gallery.objects.create(event="abc event", year=2019, sub_event="xyz event")
 
     def test_gallery_api_post(self):
         url = "/api/gallery/"
-        data = {"event": "abc event", "date": "2019-09-25", "sub_event": "xyz event"}
+        data = {"event": "abc event", "year": "2019", "sub_event": "xyz event"}
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -136,7 +136,7 @@ class GalleryTests(APITestCase):
         data = {
             "id": 1,
             "event": "abc event",
-            "date": "2019-09-25",
+            "year": 2019,
             "sub_event": "xyz event",
             "image_url": None,
         }
@@ -152,7 +152,7 @@ class AlumniTests(APITestCase):
     def setUpTestData(cls):
         Alumni.objects.create(
             name="alumni user",
-            year=2017,
+            batch=2017,
             company="abc company",
             github_id="https://github.com/abc",
             linkedin_id="https://www.linkedin.com/",
@@ -163,7 +163,7 @@ class AlumniTests(APITestCase):
         data = {
             "id": 1,
             "name": "alumni user",
-            "year": 2017,
+            "batch": 2017,
             "company": "abc company",
             "github_id": "https://github.com/abc",
             "linkedin_id": "https://www.linkedin.com/",
@@ -176,7 +176,7 @@ class AlumniTests(APITestCase):
         data = {
             "id": 1,
             "name": "alumni user",
-            "year": 2017,
+            "batch": 2017,
             "dual_degree": False,
             "company": "abc company",
             "github_id": "https://github.com/abc",
@@ -194,31 +194,34 @@ class ProjectTests(APITestCase):
     @classmethod
     def setUpTestData(cls):
         Project.objects.create(
+            domain="project domain",
             name="first project",
             description="project description here",
-            year="2019-09-25",
+            year=2019,
             github_link="https://github.com/project",
         )
 
     def test_project_api_post(self):
-        url = "/api/project/"
+        url = "/api/projects/"
         data = {
             "id": 1,
+            "domain": "project domain",
             "name": "first project",
             "description": "project description here",
-            "year": "2019-09-25",
+            "year": 2019,
             "github_link": "https://github.com/project",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_project_api_get(self):
-        url = "/api/project/"
+        url = "/api/projects/"
         data = {
             "id": 1,
+            "domain": "project domain",
             "name": "first project",
             "description": "project description here",
-            "year": "2019-09-25",
+            "year": 2019,
             "github_link": "https://github.com/project",
             "cover_url": None,
         }

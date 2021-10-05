@@ -2,21 +2,37 @@ from rest_framework import serializers, viewsets
 
 from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
 
-TEAM_FIELDS = ("id", "name", "title", "github_id", "linkedin_id", "profile_pic_url")
+TEAM_FIELDS = (
+    "id",
+    "name",
+    "title",
+    "description",
+    "github_id",
+    "linkedin_id",
+    "profile_pic_url",
+)
 BLOG_FIELDS = ("id", "title", "description", "body", "author", "published", "cover_url")
 WORKSHOP_FIELDS = ("id", "title", "description", "venue", "event_date", "cover_url")
-GALLERY_FIELDS = ("id", "event", "sub_event", "date", "image_url")
+GALLERY_FIELDS = ("id", "event", "sub_event", "year", "image_url")
 ALUMNI_FIELDS = (
     "id",
     "name",
-    "year",
+    "batch",
     "dual_degree",
     "company",
     "github_id",
     "linkedin_id",
     "profile_pic_url",
 )
-PROJECT_FIELDS = ("id", "name", "year", "description", "github_link", "cover_url")
+PROJECT_FIELDS = (
+    "id",
+    "domain",
+    "name",
+    "year",
+    "description",
+    "github_link",
+    "cover_url",
+)
 
 
 class TeamSerializer(serializers.HyperlinkedModelSerializer):
