@@ -2,10 +2,55 @@ from django.contrib import admin
 
 from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
 
-# Register your models here.
-admin.site.register(TeamModel)
-admin.site.register(Blog)
-admin.site.register(Workshop)
-admin.site.register(Alumni)
-admin.site.register(Gallery)
-admin.site.register(Project)
+
+class TeamModelFilter(admin.ModelAdmin):
+    list_display = ["name", "title", "github_id", "linkedin_id"]
+    list_filter = ["title"]
+    search_fields = ["name"]
+
+
+admin.site.register(TeamModel, TeamModelFilter)
+
+
+class BlogFilter(admin.ModelAdmin):
+    list_display = ["title", "author", "published"]
+    list_filter = ["author", "published"]
+    search_fields = ["title", "author"]
+
+
+admin.site.register(Blog, BlogFilter)
+
+
+class WorkshopFilter(admin.ModelAdmin):
+    list_display = ["title", "event_date", "venue"]
+    list_filter = ["title", "event_date"]
+    search_fields = ["title", "venue"]
+
+
+admin.site.register(Workshop, WorkshopFilter)
+
+
+class GalleryFilter(admin.ModelAdmin):
+    list_display = ["event", "sub_event", "year"]
+    list_filter = ["event", "year"]
+
+
+admin.site.register(Gallery, GalleryFilter)
+
+
+class AlumniFilter(admin.ModelAdmin):
+    list_display = ["name", "batch", "company"]
+    list_filter = ["batch", "dual_degree"]
+    search_fields = ["name"]
+
+
+admin.site.register(Alumni, AlumniFilter)
+
+
+class ProjectFilter(admin.ModelAdmin):
+    list_display = ["domain", "name", "year", "github_link"]
+    list_filter = ["domain", "year"]
+    search_fields = ["name"]
+
+
+admin.site.register(Project, ProjectFilter)
