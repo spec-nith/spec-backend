@@ -23,7 +23,7 @@ router.register("projects", ProjectViewSet)
 
 urlpatterns = [
     path("", views.Home.as_view(), name="home"),
-    path("gallery/", login_required(views.GalleryFormView.as_view()), name="gallery"),
+    path("gallery/", login_required(views.GalleryFormView), name="gallery"),
     path("index_update/", views.URLUpdateView.as_view(), name="updater"),
     path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls")),

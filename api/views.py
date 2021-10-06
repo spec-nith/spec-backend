@@ -1,36 +1,28 @@
 from datetime import datetime
-from io import BytesIO
-from zipfile import ZipFile
 
-from django.core.files.images import ImageFile
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 from django.utils.timezone import make_aware
-from django.views.generic import FormView, TemplateView, base
+from django.views.generic import TemplateView, base
 
 from api import models
 from api.forms import GalleryForm
 
 
-class GalleryFormView(FormView):
-    template_name = "gallery.html"
-    form_class = GalleryForm
-    success_url = "/"
+def GalleryFormView(request):
+    context = {}
+    if request.method == "POST":
+        upload_files = request.FILES.getlist("image")
+        for file in upload_files:
+            formset = GalleryForm(request.POST, {"image": file})
+            if formset.is_valid():
+                formset.save()
+                context["message"] = "Successful"
 
-    def form_valid(self, form):
-        zip_file = form.cleaned_data.pop("zip_import")
-        zip_file = ZipFile(zip_file, "r")
-        for name in zip_file.namelist():
-            data = zip_file.read(name)
-            # if Upload(data).is_valid():
-            if True:
-                form_data = form.cleaned_data
-                models.Gallery.objects.create(
-                    **form_data, image=ImageFile(BytesIO(data), name=name)
-                )
             else:
-                raise Exception("Valid Images not found")
+                context["error"] = formset.errors
 
-        return super().form_valid(form)
+    context["form"] = GalleryForm()
+    return render(request, "gallery.html", context)
 
 
 class Home(TemplateView):
