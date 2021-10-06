@@ -85,6 +85,9 @@ class TeamModel(models.Model):
     profile_pic = models.ImageField(upload_to=team_upload, null=True, blank=True)
     profile_pic_url = models.URLField(max_length=500, null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Team Members"
+
     def update_team_image_url(self):
         if self.profile_pic:
             self.profile_pic_url = self.profile_pic.url
@@ -136,6 +139,9 @@ class Gallery(models.Model):
     image = models.ImageField(upload_to=gallery_upload, null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Gallery"
+
     def update_gallery_image_url(self):
         if self.image:
             self.image_url = self.image.url
@@ -158,6 +164,9 @@ class Alumni(models.Model):
     )
     profile_pic = models.ImageField(upload_to=alumni_upload, null=True, blank=True)
     profile_pic_url = models.URLField(max_length=500, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Alumni"
 
     def update_alumni_image_url(self):
         if self.profile_pic:
