@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.shortcuts import HttpResponse, render
 from django.utils.timezone import make_aware
-from django.views.generic import TemplateView, base, CreateView
+from django.views.generic import CreateView, TemplateView, base
 
 from api import models
 from api.forms import GalleryForm, WorkshopForm
@@ -24,23 +24,25 @@ def GalleryFormView(request):
     context["form"] = GalleryForm()
     return render(request, "gallery.html", context)
 
+
 def WorkshopFormView(request):
     context = {}
-    if request.method == 'POST': 
-        form = WorkshopForm(request.POST,request.FILES) 
-        if form.is_valid(): 
-            form.save() 
+    if request.method == "POST":
+        form = WorkshopForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
             context["message"] = "Successful"
 
         else:
             context["error"] = form.errors
 
-    context["form"] =   WorkshopForm()
-    return render(request, 'workshop.html', context)    
+    context["form"] = WorkshopForm()
+    return render(request, "workshop.html", context)
 
 
 class Home(TemplateView):
-    template_name = "home.html"    
+    template_name = "home.html"
+
 
 class TeamModelCreateView(CreateView):
     model = models.TeamModel
@@ -48,18 +50,29 @@ class TeamModelCreateView(CreateView):
     template_name = "team.html"
     success_url = "/"
 
+
 class AlumniCreateView(CreateView):
     model = models.Alumni
-    fields = ["name", "batch", "dual_degree", "company", "github_id", "linkedin_id", "profile_pic"]
+    fields = [
+        "name",
+        "batch",
+        "dual_degree",
+        "company",
+        "github_id",
+        "linkedin_id",
+        "profile_pic",
+    ]
     template_name = "alumni.html"
     success_url = "/"
+
 
 class ProjectCreateView(CreateView):
     model = models.Project
     fields = ["domain", "name", "year", "description", "github_link", "cover"]
     template_name = "project.html"
     success_url = "/"
-    
+
+
 class URLUpdateView(base.View):
     def get(self, request, *args, **kwargs):
 

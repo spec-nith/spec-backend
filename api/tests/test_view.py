@@ -30,6 +30,7 @@ class GalleryFormViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "gallery.html")
 
+
 class WorkshopFormViewTest(TestCase):
     def test_workshop_url_exists(self):
         response = self.client.get("/workshop/")
@@ -45,7 +46,8 @@ class WorkshopFormViewTest(TestCase):
         response = self.client.get("/workshop/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "workshop.html")
-        
+
+
 class TeamModelCreateViewTest(TestCase):
     def test_team_url_exists(self):
         response = self.client.get("/team/")
@@ -61,6 +63,7 @@ class TeamModelCreateViewTest(TestCase):
         response = self.client.get("/team/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "team.html")
+
 
 class AlumniCreateViewTest(TestCase):
     def test_alumni_url_exists(self):
@@ -78,6 +81,7 @@ class AlumniCreateViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "alumni.html")
 
+
 class ProjectCreateViewTest(TestCase):
     def test_project_url_exists(self):
         response = self.client.get("/project/")
@@ -93,6 +97,7 @@ class ProjectCreateViewTest(TestCase):
         response = self.client.get("/project/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "project.html")
+
 
 class URLUpdateViewTest(TestCase):
     def test_update_url_exists(self):
