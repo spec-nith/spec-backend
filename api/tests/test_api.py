@@ -137,6 +137,7 @@ class GalleryTests(APITestCase):
             "year": 2019,
             "sub_event": "xyz event",
             "image_url": None,
+            "thumb_image_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
