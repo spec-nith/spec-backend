@@ -1,0 +1,5 @@
+-r base.txt
+wheel==0.37.0
+autoflake==1.4
+black==21.6b0
+isort==5.9.3

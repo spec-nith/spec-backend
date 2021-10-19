@@ -30,6 +30,7 @@ lib/
 lib64/
 lib64
 share/
+include/
 Scripts/
 
 # Sublime Text # 

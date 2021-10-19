@@ -10,15 +10,22 @@ PORT = 8000
 
 virtualenv:
 	@echo "-> Getting Essential Build Files"
-	@sudo apt-get install build-essential
+	@sudo apt-get install python3-venv
 	@echo "-> Making Virtual Environment"
 	@${PYTHON_EXE} -m venv .
 
-install: virtualenv
+genkey: virtualenv
 	@echo "-> Generating Secret key"
 	@if test -f ${ENV_FILE}; then echo ".env file exists already"; true; fi
 	@mkdir -p $(shell dirname ${ENV_FILE}) && touch ${ENV_FILE}
 	@echo SECRET_KEY=\"${GET_SECRET_KEY}\"\\nDEVELOPMENT=True > ${ENV_FILE}
+
+install: genkey
+	@echo "-> Installing Dependencies"
+	@${ACTIVATE} pip install -r etc/dev.txt
+
+
+install_full: genkey
 	@echo "-> Installing Dependencies"
 	@${ACTIVATE} pip install -r requirements.txt
 
@@ -32,10 +39,6 @@ run:
 
 runssl:
 	${MANAGE} runsslserver ${PORT}
-
-freeze:
-	@echo "-> Updating Project Requirements"
-	@${ACTIVATE} pip freeze > requirements.txt
 
 flush:
 	@echo "-> Flushing Database"
