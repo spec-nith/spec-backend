@@ -1,10 +1,13 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 ">
     <a class="navbar-brand" href="{%url 'home'%}">Home</a>
     <a class="navbar-brand " href="{%url 'gallery'%}">Gallery</a>
+    <a class="navbar-brand " href="{%url 'workshop'%}">Workshops</a>
+    <a class="navbar-brand " href="{%url 'team'%}">Team</a>
+    <a class="navbar-brand " href="{%url 'alumni'%}">Alumni</a>
+    <a class="navbar-brand " href="{%url 'project'%}">Projects</a>
     {%if user.is_authenticated%}
     <a class="navbar-brand ml-auto " href="{%url 'logout'%}">Logout</a>
     {%else%}
     <a class="navbar-brand ml-auto " href="{%url 'login'%}">Login</a>
     {%endif%}
-
 </nav>

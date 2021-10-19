@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}SPEC Workshop {% endblock title %}
+{% block content %}
+<div>
+    <h2>Workshop Upload</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button class="btn btn-success " type="submit">Save</button>
+    </form>
+
+    {%if error%}
+        <script>
+            snack("{{error.image.0}}", "bg-danger text-white")
+        </script>
+    {%endif%}
+    {%if message%}
+        <script>
+            snack("{{message}}", "bg-success text-white")
+        </script>
+    {%endif%}
+</div>
+{% endblock content %}
