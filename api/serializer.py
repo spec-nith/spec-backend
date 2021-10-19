@@ -12,7 +12,7 @@ TEAM_FIELDS = (
 )
 BLOG_FIELDS = ("id", "title", "description", "body", "author", "published", "cover_url")
 WORKSHOP_FIELDS = ("id", "title", "description", "venue", "event_date", "cover_url")
-GALLERY_FIELDS = ("id", "event", "sub_event", "year", "image_url")
+GALLERY_FIELDS = ("id", "event", "sub_event", "year", "image_url", "thumb_image_url")
 ALUMNI_FIELDS = (
     "id",
     "name",
@@ -83,7 +83,7 @@ class GallerySerializer(serializers.HyperlinkedModelSerializer):
 class GalleryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Gallery.objects.values(*GALLERY_FIELDS)
     serializer_class = GallerySerializer
-    filterset_fields = GALLERY_FIELDS[:-1]
+    filterset_fields = GALLERY_FIELDS[:-2]
 
 
 class AlumniSerializer(serializers.HyperlinkedModelSerializer):

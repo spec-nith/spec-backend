@@ -1,8 +1,12 @@
+import sys
+from io import BytesIO
 from urllib.parse import urlparse
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
+from PIL import Image
 
 CHOICES = (
     ("Volunteer", "Volunteer"),
@@ -35,6 +39,11 @@ def workshop_upload(instance, filename):
 def gallery_upload(instance, filename):
     ext = filename.split(".")[-1]
     return "gallery/{}.{}".format(uuid4().hex, ext)
+
+
+def thumbnail_upload(instance, filename):
+    ext = filename.split(".")[-1]
+    return "thumbnail/{}.{}".format(uuid4().hex, ext)
 
 
 def alumni_upload(instance, filename):
@@ -137,7 +146,36 @@ class Gallery(models.Model):
     sub_event = models.CharField(max_length=100, blank=True, null=True)
     year = models.PositiveIntegerField(null=True, blank=True)
     image = models.ImageField(upload_to=gallery_upload, null=True, blank=True)
+    thumb_image = models.ImageField(upload_to=thumbnail_upload, null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)
+    thumb_image_url = models.URLField(max_length=500, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            imageTemp = Image.open(self.image)
+            imageTemp = imageTemp.convert("RGB")
+            output = BytesIO()
+            THUMB_SIZE = [512, 256]
+            if imageTemp.height > imageTemp.width and imageTemp.height > 512:
+                height_percent = THUMB_SIZE[0] / float(imageTemp.height)
+                width_size = int((float(imageTemp.width) * float(height_percent)))
+                imageTempResized = imageTemp.resize((width_size, THUMB_SIZE[0]))
+            elif imageTemp.height <= imageTemp.width and imageTemp.width > 512:
+                width_percent = THUMB_SIZE[0] / float(imageTemp.width)
+                height_size = int((float(imageTemp.height) * float(width_percent)))
+                imageTempResized = imageTemp.resize((THUMB_SIZE[0], height_size))
+
+            imageTempResized.save(output, format="JPEG")
+            output.seek(0)
+            self.thumb_image = InMemoryUploadedFile(
+                output,
+                "ImageField",
+                "image.jpeg",
+                "image/jpeg",
+                sys.getsizeof(output),
+                None,
+            )
+        super(Gallery, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Gallery"
@@ -145,6 +183,7 @@ class Gallery(models.Model):
     def update_gallery_image_url(self):
         if self.image:
             self.image_url = self.image.url
+            self.thumb_image_url = self.thumb_image.url
             self.save()
 
     def __str__(self):
