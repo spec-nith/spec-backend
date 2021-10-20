@@ -29,62 +29,68 @@
 
 ## 📝 General Overview 
 
-This repository contains all the source code for ***Django backend*** of the official website of Society for Promotion of Electronics Culture (SPEC), NIT Hamirpur from 2021 onwards. <!--SPEC is run under the aegis of Electronics and Communication Department of NITH and is renowned for conducting a national level hackathon [ELECTROTHON](https://specnith.com/electrothon.html) along with a plethora of workshops, competitions, guest talks and the annual technical fest - [SPECFEST](https://specnith.com/specfest2k21.html).-->
+This repository contains the source code of **Django Backend** for the official website of Society for Promotion of Electronics Culture (SPEC), NIT Hamirpur from 2021 onwards. <!--SPEC is run under the aegis of Electronics and Communication Department of NITH and is renowned for conducting a national level hackathon [ELECTROTHON](https://specnith.com/electrothon.html) along with a plethora of workshops, competitions, guest talks and the annual technical fest - [SPECFEST](https://specnith.com/specfest2k21.html).-->
 
 Visit the current official website of SPEC from [here](https://specnith.com/).
 
 ## ⚙️ Set-Up and Usage
+   ### For Linux (Debian) users:
 
-- To  run the project, install all the dependencies:
-  
+- Install the base-dependencies of the project:
   ```
   make install
   ```
 
-- You can use ```make``` commands to perform various operations in your django project.
+- You can use `make` commands to perform various operations:
   
-  - Start django server on port `8000`. You can customize it by editing `PORT` in `Makefile`:
+  - Start django server on port `8000`:
     ```
     make run
     ```
+    _Note: You can customize it default port by editing `PORT` variable in `Makefile`._
+
+  - To run the project in **SECURE SSL** mode, use:
     ```
     make runssl
     ```
 
-  - Apply database migrations: 
+  - Apply database migrations using: 
     ```
     make migrate
     ```
 
-  - Clear database records:
+  - Flush/Clear database records:
     ```
     make flush
     ```
-    *Note: Media files will not be delewted using this command*
+    *Note: Media files will not be deleted using this command*
 
-  - Update project requirements (useful for deployment)
-    ```
-    make freeze
-    ```
-    This command will add all your project dependencies to `etc/requirements.txt`, making it very easy for deployment.      
-
-  
-  - Check for proper formatting and import style using `black` and `isort`
+  - Check for proper formatting and sort imports using:
     ```
     make format
     ```   
 
-  - Running Django Testcases
+  - To run Django Test-Suite:
     ```
     make test
     ```
 
-  - Running black validation
+  - To run all formatting and coverage tests:
     ```
     make check
-    ```     
+    ```  
 
+  - To install the environment with all its optional dependencies: 
+    ```
+    make install_full
+    ```   
 
+### For Windows users:     
+   - To set up the environment:
+  
+     ```
+     setup.bat
+     ```
 
 
 
@@ -95,7 +101,7 @@ Contributions are what make the open source community such an amazing place to  
 
 - Clone your Fork to your local machine
   ```
-  git clone [https://github.com/your-username/spec-frontend.git]
+  git clone [https://github.com/your-username/spec-backend.git]
   ```
          
 - Create your Feature Branch
