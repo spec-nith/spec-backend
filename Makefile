@@ -48,14 +48,14 @@ format:
 	@echo "-> Run autoflake to remove unused imports"
 	@${ACTIVATE}autoflake ${AUTOFLAKE_ARGS} api backend
 	@echo "-> Run isort imports ordering validation"
-	@${ACTIVATE} isort --gitignore --profile black .
+	@${ACTIVATE} isort --profile black api backend
 	@echo "-> Run black validation"
-	@${ACTIVATE} black .
+	@${ACTIVATE} black api backend
 
 test:
 	@${MANAGE} test
 
 check: test
 	@echo "-> Run black validation"
-	@${ACTIVATE} black --check .
+	@${ACTIVATE} black --check api backend
 	
