@@ -27,6 +27,7 @@ media
 pyvenv.cfg
 bin/
 lib/
+Lib
 lib64/
 lib64
 share/
