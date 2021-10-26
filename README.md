@@ -89,7 +89,7 @@ Visit the current official website of SPEC from [here](https://specnith.com/).
    - To set up the environment:
   
      ```
-     setup.bat
+     make.bat
      ```
 
 
