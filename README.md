@@ -36,18 +36,21 @@ Visit the current official website of SPEC from [here](https://specnith.com/).
 ## ⚙️ Set-Up and Usage
    ### For Linux (Debian) users:
 
-- Install the base-dependencies of the project:
+- To install the base-dependencies of the project:
   ```
   make install
   ```
-
+ - To install the environment with all its optional dependencies:  
+    ```
+    make install_full
+    ```  
 - You can use `make` commands to perform various operations:
   
   - Start django server on port `8000`:
     ```
     make run
     ```
-    _Note: You can customize it default port by editing `PORT` variable in `Makefile`._
+    ***Note:*** _You can customize it default port by editing `PORT` variable in `Makefile`._
 
   - To run the project in **SECURE SSL** mode, use:
     ```
@@ -63,7 +66,7 @@ Visit the current official website of SPEC from [here](https://specnith.com/).
     ```
     make flush
     ```
-    *Note: Media files will not be deleted using this command*
+    ***Note:*** _Media files will not be deleted using this command_
 
   - Check for proper formatting and sort imports using:
     ```
@@ -76,23 +79,34 @@ Visit the current official website of SPEC from [here](https://specnith.com/).
     ```
 
   - To run all formatting and coverage tests:
+   
     ```
     make check
-    ```  
-
-  - To install the environment with all its optional dependencies: 
-    ```
-    make install_full
-    ```   
+    ``` 
 
 ### For Windows users:     
    - To set up the environment:
   
      ```
-     make.bat
+     .\make.bat install
      ```
 
+   - To activate the virtual environment
+     ```
+     ./Scripts/Activate.ps1
+     ```
 
+  ***Note:*** _All the make commands are same as in GNU, the difference ensues from how they are called. For example:_
+    
+  - For Linux:
+    ```
+    make run
+    ```
+
+  - For Windows:
+    ```
+    .\make run
+    ```  
 
 ## 🎯  Contributing Guidelines
 Contributions are what make the open source community such an amazing place to  learn, inspire and build experiences that are cherished for a lifetime.  Go ahead and follow these steps to contribute to the community.
