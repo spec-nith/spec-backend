@@ -1,9 +1,7 @@
-from datetime import date
-
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni, Gallery, Project, TeamModel, Workshop
 
 
 class TeamModelTests(APITestCase):
@@ -32,45 +30,6 @@ class TeamModelTests(APITestCase):
             "github_id": "https://github.com/tm",
             "linkedin_id": "https://www.linkedin.com/tm",
             "profile_pic_url": None,
-        }
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        result = response.json()[0]
-        self.assertEqual(result, data)
-
-
-class BlogTests(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
-        Blog.objects.create(
-            title="first blog",
-            description="blog description here",
-            author="ABC",
-            body='{"key":"value"}',
-        )
-
-    def test_blog_api_post(self):
-        url = "/api/blog/"
-        data = {
-            "title": "first blog",
-            "description": "blog description here",
-            "author": "ABC",
-            "body": '{"key":"value"}',
-        }
-        response = self.client.post(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_blog_api_get(self):
-        url = "/api/blog/"
-        data = {
-            "id": 1,
-            "title": "first blog",
-            "description": "blog description here",
-            "author": "ABC",
-            "body": '{"key":"value"}',
-            "cover_url": None,
-            "published": date.today().strftime("%Y-%m-%d"),
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

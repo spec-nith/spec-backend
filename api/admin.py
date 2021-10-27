@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni, Gallery, Project, TeamModel, Workshop
 
 
 class TeamModelFilter(admin.ModelAdmin):
@@ -10,15 +10,6 @@ class TeamModelFilter(admin.ModelAdmin):
 
 
 admin.site.register(TeamModel, TeamModelFilter)
-
-
-class BlogFilter(admin.ModelAdmin):
-    list_display = ["title", "author", "published"]
-    list_filter = ["author", "published"]
-    search_fields = ["title", "author"]
-
-
-admin.site.register(Blog, BlogFilter)
 
 
 class WorkshopFilter(admin.ModelAdmin):

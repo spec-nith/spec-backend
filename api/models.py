@@ -106,24 +106,6 @@ class TeamModel(models.Model):
         return self.name
 
 
-class Blog(models.Model):
-    title = models.CharField(max_length=500)
-    description = models.TextField()
-    author = models.CharField(max_length=50)
-    body = models.JSONField()
-    published = models.DateField(auto_now_add=True)
-    cover = models.ImageField(upload_to=blog_upload, null=True, blank=True)
-    cover_url = models.URLField(max_length=500, null=True, blank=True)
-
-    def update_blog_cover_url(self):
-        if self.cover:
-            self.cover_url = self.cover.url
-            self.save()
-
-    def __str__(self):
-        return self.title
-
-
 class Workshop(models.Model):
     title = models.CharField(max_length=500)
     description = models.TextField()
@@ -151,7 +133,7 @@ class Gallery(models.Model):
     thumb_image_url = models.URLField(max_length=500, null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        if self.image:
+        if self.image and self.pk is None:
             imageTemp = Image.open(self.image)
             imageTemp = imageTemp.convert("RGB")
             output = BytesIO()
@@ -165,13 +147,13 @@ class Gallery(models.Model):
                 height_size = int((float(imageTemp.height) * float(width_percent)))
                 imageTempResized = imageTemp.resize((THUMB_SIZE[0], height_size))
 
-            imageTempResized.save(output, format="JPEG")
+            imageTempResized.save(output, format="WEBP")
             output.seek(0)
             self.thumb_image = InMemoryUploadedFile(
                 output,
                 "ImageField",
-                "image.jpeg",
-                "image/jpeg",
+                "image.webp",
+                "image/webp",
                 sys.getsizeof(output),
                 None,
             )

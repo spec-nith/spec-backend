@@ -91,9 +91,6 @@ class URLUpdateView(base.View):
         for i in models.TeamModel.objects.all():
             i.update_team_image_url()
 
-        for i in models.Blog.objects.all():
-            i.update_blog_cover_url()
-
         for i in models.Workshop.objects.all():
             i.update_workshop_cover_url()
 

@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.test import TestCase
 
-from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni, Gallery, Project, TeamModel, Workshop
 from api.test_settings import common_settings
 
 DUMMY_PATH = "api/tests/dummy/test_image.jpeg"
@@ -59,46 +59,6 @@ class TeamModelTest(TestCase):
         team.refresh_from_db()
         expected_object_name = f"{team.profile_pic.url}"
         self.assertEquals(expected_object_name, team.profile_pic_url)
-
-
-@common_settings
-class BlogTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        Blog.objects.create(
-            title="first blog",
-            description="blog description here",
-            author="ABC",
-            body='{"key":"value"}',
-            cover=File(open(DUMMY_PATH, "rb")),
-        )
-
-    def test_blog_title(self):
-        blog = Blog.objects.get(id=1)
-        expected_object_name = f"{blog.title}"
-        self.assertEquals(expected_object_name, "first blog")
-
-    def test_blog_description(self):
-        blog = Blog.objects.get(id=1)
-        expected_object_name = f"{blog.description}"
-        self.assertEquals(expected_object_name, "blog description here")
-
-    def test_blog_author(self):
-        blog = Blog.objects.get(id=1)
-        expected_object_name = f"{blog.author}"
-        self.assertEquals(expected_object_name, "ABC")
-
-    def test_blog_body(self):
-        blog = Blog.objects.get(id=1)
-        expected_object_name = f"{blog.body}"
-        self.assertEquals(expected_object_name, '{"key":"value"}')
-
-    def test_blog_cover(self):
-        blog = Blog.objects.get(id=1)
-        blog.update_blog_cover_url()
-        blog.refresh_from_db()
-        expected_object_name = f"{blog.cover.url}"
-        self.assertEquals(expected_object_name, blog.cover_url)
 
 
 @common_settings

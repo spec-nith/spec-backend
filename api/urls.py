@@ -5,7 +5,6 @@ from rest_framework import routers
 from api import views
 from api.serializer import (
     AlumniViewSet,
-    BlogViewSet,
     GalleryViewSet,
     ProjectViewSet,
     TeamViewSet,
@@ -15,7 +14,6 @@ from api.serializer import (
 router = routers.DefaultRouter()
 router.register("team", TeamViewSet)
 router.register("workshop", WorkshopViewSet)
-router.register("blog", BlogViewSet)
 router.register("alumni", AlumniViewSet)
 router.register("gallery", GalleryViewSet)
 router.register("projects", ProjectViewSet)
