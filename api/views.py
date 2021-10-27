@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.http.response import HttpResponseBadRequest
 
 from django.shortcuts import HttpResponse, render
 from django.utils.timezone import make_aware
@@ -16,10 +17,10 @@ def GalleryFormView(request):
             formset = GalleryForm(request.POST, {"image": file})
             if formset.is_valid():
                 formset.save()
-                context["message"] = "Successful"
+                return HttpResponse("Success")
 
             else:
-                context["error"] = formset.errors
+                return HttpResponseBadRequest(formset.errors)
 
     context["form"] = GalleryForm()
     return render(request, "gallery.html", context)

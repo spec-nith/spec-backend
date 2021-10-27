@@ -147,7 +147,7 @@ class Gallery(models.Model):
                 height_size = int((float(imageTemp.height) * float(width_percent)))
                 imageTempResized = imageTemp.resize((THUMB_SIZE[0], height_size))
 
-            imageTempResized.save(output, format="WEBP")
+            imageTempResized.save(output, format="WEBP", quality=92)
             output.seek(0)
             self.thumb_image = InMemoryUploadedFile(
                 output,
