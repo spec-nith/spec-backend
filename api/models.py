@@ -26,11 +26,6 @@ def team_upload(instance, filename):
     return "team/{}.{}".format(uuid4().hex, ext)
 
 
-def blog_upload(instance, filename):
-    ext = filename.split(".")[-1]
-    return "blogs/{}.{}".format(uuid4().hex, ext)
-
-
 def workshop_upload(instance, filename):
     ext = filename.split(".")[-1]
     return "workshop/{}.{}".format(uuid4().hex, ext)

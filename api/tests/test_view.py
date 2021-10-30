@@ -97,13 +97,3 @@ class ProjectCreateViewTest(TestCase):
         response = self.client.get("/project/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "project.html")
-
-
-class URLUpdateViewTest(TestCase):
-    def test_update_url_exists(self):
-        response = self.client.get("/index_update/")
-        self.assertEqual(response.status_code, 200)
-
-    def test_update_url_accessible_by_name(self):
-        response = self.client.get(reverse("updater"))
-        self.assertEqual(response.status_code, 200)
