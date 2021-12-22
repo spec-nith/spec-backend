@@ -2,7 +2,11 @@ from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.test import TestCase
 
-from api.models import Alumni, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni
+from api.models import Gallery
+from api.models import Project
+from api.models import TeamModel
+from api.models import Workshop
 from api.test_settings import common_settings
 
 DUMMY_PATH = "api/tests/dummy/test_image.jpeg"

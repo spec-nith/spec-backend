@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from api.models import Alumni, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni
+from api.models import Gallery
+from api.models import Project
+from api.models import TeamModel
+from api.models import Workshop
 
 
 class TeamModelFilter(admin.ModelAdmin):

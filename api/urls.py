@@ -1,15 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.urls import include, path
+from django.urls import include
+from django.urls import path
 from rest_framework import routers
 
 from api import views
-from api.serializer import (
-    AlumniViewSet,
-    GalleryViewSet,
-    ProjectViewSet,
-    TeamViewSet,
-    WorkshopViewSet,
-)
+from api.serializer import AlumniViewSet
+from api.serializer import GalleryViewSet
+from api.serializer import ProjectViewSet
+from api.serializer import TeamViewSet
+from api.serializer import WorkshopViewSet
 
 router = routers.DefaultRouter()
 router.register("team", TeamViewSet)

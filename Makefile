@@ -45,10 +45,8 @@ flush:
 	${MANAGE} flush
 
 format:
-	@echo "-> Run autoflake to remove unused imports"
-	@${ACTIVATE}autoflake ${AUTOFLAKE_ARGS} api backend
 	@echo "-> Run isort imports ordering validation"
-	@${ACTIVATE} isort --profile black api backend
+	@${ACTIVATE} isort api backend
 	@echo "-> Run black validation"
 	@${ACTIVATE} black api backend
 

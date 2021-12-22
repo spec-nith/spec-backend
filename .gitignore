@@ -58,3 +58,4 @@ tmp/
 dist/
 build/
 .settings
+.DS_Store

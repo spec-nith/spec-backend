@@ -2,11 +2,14 @@ from datetime import datetime
 
 from django.core import serializers
 from django.http.response import HttpResponseBadRequest
-from django.shortcuts import HttpResponse, render
-from django.views.generic import CreateView, TemplateView
+from django.shortcuts import HttpResponse
+from django.shortcuts import render
+from django.views.generic import CreateView
+from django.views.generic import TemplateView
 
 from api import models
-from api.forms import GalleryForm, WorkshopForm
+from api.forms import GalleryForm
+from api.forms import WorkshopForm
 
 
 def dump_data(request):

@@ -1,6 +1,11 @@
-from rest_framework import serializers, viewsets
+from rest_framework import serializers
+from rest_framework import viewsets
 
-from api.models import Alumni, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni
+from api.models import Gallery
+from api.models import Project
+from api.models import TeamModel
+from api.models import Workshop
 
 TEAM_FIELDS = (
     "id",
