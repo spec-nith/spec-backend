@@ -4,6 +4,7 @@ from django.core import serializers
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
+from django.utils.timezone import make_aware
 from django.views.generic import CreateView
 from django.views.generic import TemplateView
 
@@ -91,3 +92,48 @@ class ProjectCreateView(CreateView):
     fields = ["domain", "name", "year", "description", "github_link", "cover"]
     template_name = "project.html"
     success_url = "/"
+
+
+def TeamUpdateView(request, pk):
+    try:
+        obj = models.TeamModel.objects.all()[pk]
+        obj.update_team_image_url()
+        return HttpResponse(f"{{'message': 'Updated'}}")
+    except IndexError:
+        return HttpResponse(f"{{'message': 'Does not exist'}}")
+
+
+def WorkshopUpdateView(request, pk):
+    try:
+        obj = models.Workshop.objects.all()[pk]
+        obj.update_workshop_cover_url()
+        return HttpResponse(f"{{'message': 'Updated'}}")
+    except IndexError:
+        return HttpResponse(f"{{'message': 'Does not exist'}}")
+
+
+def GalleryUpdateView(request, pk):
+    try:
+        obj = models.Gallery.objects.all()[pk]
+        obj.update_gallery_image_url()
+        return HttpResponse(f"{{'message': 'Updated'}}")
+    except IndexError:
+        return HttpResponse(f"{{'message': 'Does not exist'}}")
+
+
+def AlumniUpdateView(request, pk):
+    try:
+        obj = models.Alumni.objects.all()[pk]
+        obj.update_alumni_image_url()
+        return HttpResponse(f"{{'message': 'Updated'}}")
+    except IndexError:
+        return HttpResponse(f"{{'message': 'Does not exist'}}")
+
+
+def ProjectUpdateView(request, pk):
+    try:
+        obj = models.Project.objects.all()[pk]
+        obj.update_project_cover_url()
+        return HttpResponse(f"{{'message': 'Updated'}}")
+    except IndexError:
+        return HttpResponse(f"{{'message': 'Does not exist'}}")
