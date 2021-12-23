@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from django.core import serializers
-from django.http.response import HttpResponseBadRequest, JsonResponse
+from django.http.response import HttpResponseBadRequest
+from django.http.response import JsonResponse
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.utils.timezone import make_aware
@@ -98,42 +99,42 @@ def TeamUpdateView(request, pk):
     try:
         obj = models.TeamModel.objects.all()[pk]
         obj.update_team_image_url()
-        return JsonResponse({'message': 'Updated'})
+        return JsonResponse({"message": "Updated"})
     except IndexError:
-        return JsonResponse({'message': 'Does not exist'})
+        return JsonResponse({"message": "Does not exist"})
 
 
 def WorkshopUpdateView(request, pk):
     try:
         obj = models.Workshop.objects.all()[pk]
         obj.update_workshop_cover_url()
-        return JsonResponse({'message': 'Updated'})
+        return JsonResponse({"message": "Updated"})
     except IndexError:
-        return JsonResponse({'message': 'Does not exist'})
+        return JsonResponse({"message": "Does not exist"})
 
 
 def GalleryUpdateView(request, pk):
     try:
         obj = models.Gallery.objects.all()[pk]
         obj.update_gallery_image_url()
-        return JsonResponse({'message': 'Updated'})
+        return JsonResponse({"message": "Updated"})
     except IndexError:
-        return JsonResponse({'message': 'Does not exist'})
+        return JsonResponse({"message": "Does not exist"})
 
 
 def AlumniUpdateView(request, pk):
     try:
         obj = models.Alumni.objects.all()[pk]
         obj.update_alumni_image_url()
-        return JsonResponse({'message': 'Updated'})
+        return JsonResponse({"message": "Updated"})
     except IndexError:
-        return JsonResponse({'message': 'Does not exist'})
+        return JsonResponse({"message": "Does not exist"})
 
 
 def ProjectUpdateView(request, pk):
     try:
         obj = models.Project.objects.all()[pk]
         obj.update_project_cover_url()
-        return JsonResponse({'message': 'Updated'})
+        return JsonResponse({"message": "Updated"})
     except IndexError:
-        return JsonResponse({'message': 'Does not exist'})
+        return JsonResponse({"message": "Does not exist"})

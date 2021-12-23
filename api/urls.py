@@ -32,4 +32,5 @@ urlpatterns = [
     path("cache/workshop/<int:pk>", views.WorkshopUpdateView, name="update_workshop"),
     path("cache/gallery/<int:pk>", views.GalleryUpdateView, name="update_gallery"),
     path("cache/alumni/<int:pk>", views.AlumniUpdateView, name="update_alumni"),
+    path("cache/projects/<int:pk>", views.ProjectUpdateView, name="update_project"),
 ]
