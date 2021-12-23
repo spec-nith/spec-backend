@@ -1,6 +1,7 @@
 from django import forms
 
-from api.models import Gallery, Workshop
+from api.models import Gallery
+from api.models import Workshop
 
 
 class GalleryForm(forms.ModelForm):

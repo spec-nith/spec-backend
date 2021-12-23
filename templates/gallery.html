@@ -1,9 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}SPEC Gallery {% endblock title %}
 {% block content %}
 <div>
     <h2>Gallery Upload</h2>
-    <form method="POST" enctype="multipart/form-data">
+    <div id='upload-progress'>
+        <div class="container p-5" id="progress-card">
+            <div class="row">
+                <div class="col-12 text-center my-3">
+                    Uploading Files
+                </div>
+                <div class="col-12 progress" style="padding: 0;">
+                    <div id="progress-bar" class="progress-bar" style="width: 0%;" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+                <div class="col-12 text-center my-3" id="file-counter"></div>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" id="file-catcher">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
@@ -12,14 +28,16 @@
     </form>
 
     {%if error%}
-        <script>
-            snack("{{error.image.0}}", "bg-danger text-white")
-        </script>
+    <script>
+        snack("{{error.image.0}}", "bg-danger text-white")
+    </script>
     {%endif%}
     {%if message%}
-        <script>
-            snack("{{message}}", "bg-success text-white")
-        </script>
+    <script>
+        snack("{{message}}", "bg-success text-white")
+    </script>
     {%endif%}
+    <input type="hidden" name="upload_url" id="upload_url" value="{%url 'gallery'%}" />
+    <script src="{%static 'js/fileuploader.js'%}"></script>
 </div>
 {% endblock content %}

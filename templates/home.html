@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock title %}
 {% block content %}
+
 <marquee>
   <h2>I'm on</h2>
 </marquee>
-{% endblock content %}
+{%if user.is_authenticated%}
+<p class="backup" style="position: fixed; bottom: 0">
+  <a class="btn btn-primary btn-lg" href="{% url 'dump_data' %}" role="button">Backup</a>
+</p>
+{% endif %}
 
+{% endblock content %}

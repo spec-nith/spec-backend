@@ -1,6 +1,11 @@
-from rest_framework import serializers, viewsets
+from rest_framework import serializers
+from rest_framework import viewsets
 
-from api.models import Alumni, Blog, Gallery, Project, TeamModel, Workshop
+from api.models import Alumni
+from api.models import Gallery
+from api.models import Project
+from api.models import TeamModel
+from api.models import Workshop
 
 TEAM_FIELDS = (
     "id",
@@ -10,7 +15,6 @@ TEAM_FIELDS = (
     "linkedin_id",
     "profile_pic_url",
 )
-BLOG_FIELDS = ("id", "title", "description", "body", "author", "published", "cover_url")
 WORKSHOP_FIELDS = ("id", "title", "description", "venue", "event_date", "cover_url")
 GALLERY_FIELDS = ("id", "event", "sub_event", "year", "image_url", "thumb_image_url")
 ALUMNI_FIELDS = (
@@ -45,19 +49,6 @@ class TeamViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TeamModel.objects.values(*TEAM_FIELDS)
     serializer_class = TeamSerializer
     filterset_fields = TEAM_FIELDS
-
-
-class BlogSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Blog
-        fields = BLOG_FIELDS
-        read_only_fields = BLOG_FIELDS
-
-
-class BlogViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Blog.objects.values(*BLOG_FIELDS)
-    serializer_class = BlogSerializer
-    filterset_fields = ("id", "title", "description", "author", "published")
 
 
 class WorkshopSerializer(serializers.HyperlinkedModelSerializer):
