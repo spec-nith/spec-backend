@@ -97,16 +97,16 @@ class ProjectCreateView(CreateView):
 
 def TeamUpdateView(request, pk):
     try:
-        obj = models.TeamModel.objects.all()[pk]
+        obj = models.TeamModel.objects.all().order_by("pk")[pk]
         obj.update_team_image_url()
-        return JsonResponse({"message": "Updated"})
+        return JsonResponse({"message": f"Updated"})
     except IndexError:
         return JsonResponse({"message": "Does not exist"})
 
 
 def WorkshopUpdateView(request, pk):
     try:
-        obj = models.Workshop.objects.all()[pk]
+        obj = models.Workshop.objects.all().order_by("pk")[pk]
         obj.update_workshop_cover_url()
         return JsonResponse({"message": "Updated"})
     except IndexError:
@@ -115,7 +115,7 @@ def WorkshopUpdateView(request, pk):
 
 def GalleryUpdateView(request, pk):
     try:
-        obj = models.Gallery.objects.all()[pk]
+        obj = models.Gallery.objects.all().order_by("pk")[pk]
         obj.update_gallery_image_url()
         return JsonResponse({"message": "Updated"})
     except IndexError:
@@ -124,7 +124,7 @@ def GalleryUpdateView(request, pk):
 
 def AlumniUpdateView(request, pk):
     try:
-        obj = models.Alumni.objects.all()[pk]
+        obj = models.Alumni.objects.all().order_by("pk")[pk]
         obj.update_alumni_image_url()
         return JsonResponse({"message": "Updated"})
     except IndexError:
@@ -133,7 +133,7 @@ def AlumniUpdateView(request, pk):
 
 def ProjectUpdateView(request, pk):
     try:
-        obj = models.Project.objects.all()[pk]
+        obj = models.Project.objects.all().order_by("pk")[pk]
         obj.update_project_cover_url()
         return JsonResponse({"message": "Updated"})
     except IndexError:
