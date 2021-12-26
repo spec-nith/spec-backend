@@ -56,4 +56,9 @@ test:
 check: test
 	@echo "-> Run black validation"
 	@${ACTIVATE} black --check api backend
-	
+
+coverage: 
+	@echo "-> Generating coverage report"
+	@${ACTIVATE} coverage run --source='.' manage.py test
+	@${ACTIVATE} coverage report
+	@${ACTIVATE} coverage html

@@ -46,8 +46,6 @@ IF "%1"== "flush" (
     %MANAGE% flush
 )
 IF "%1"=="format" (
-    ECHO - Run autoflake to remove unused imports
-	.\Scripts\autoflake %AUTOFLAKE_ARGS% api backend
 	ECHO - Run isort imports ordering validation
 	.\Scripts\isort --profile black api backend
 	ECHO - Run black validation
@@ -63,7 +61,12 @@ IF "%1"=="check" (
     ECHO - Running black validation
     .\Scripts\black --check api backend
 )
-
+IF "%1"=="coverage" (
+    ECHO - Generating coverage report
+    .\Scripts\coverage run --source='.' manage.py test
+    .\Scripts\coverage report
+    .\Scripts\coverage html
+)
 EXIT /B 0
 :: ----------------------------------------------------------
 :: Functions
