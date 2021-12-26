@@ -1,13 +1,61 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Home{% endblock title %}
+{% block link %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<link rel="stylesheet" href="{% static 'logo-anim.css' %}">
+{% endblock link %}
 {% block content %}
-
-<marquee>
-  <h2>I'm on</h2>
-</marquee>
+<div id="svg-container">
+  <svg viewBox="0 0 1320 300">
+    <defs>
+      <pattern id="GPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"
+        patternTransform="rotate(35)">
+        <animatetransform attributeType="xml" attributeName="patternTransform" type="rotate" from="35" to="395"
+          begin="0" dur="160s" repeatCount="indefinite"></animatetransform>
+        <circle cx="10" cy="10" r="10" stroke="none" fill="yellow">
+          <animate attributeName="r" type="xml" from="1" to="1" values="1; 10; 1" begin="0s" dur="2s"
+            repeatCount="indefinite"></animate>
+        </circle>
+      </pattern>
+      <pattern id="SPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"
+        patternTransform="rotate(100)">
+        <animatetransform attributeType="xml" attributeName="patternTransform" type="rotate" from="100" to="400"
+          begin="0" dur="10s" repeatCount="indefinite"></animatetransform>
+        <circle cx="10" cy="10" r="10" stroke="white" fill="blue">
+          <animate attributeName="r" type="xml" from="1" to="1" values="1; 10; 1" begin="0s" dur="2s"
+            repeatCount="indefinite"></animate>
+        </circle>
+      </pattern>
+    </defs>
+    <symbol id="s-text"><text text-anchor="middle" x="20%" y="50%" dy=".35em">S</text></symbol>
+    <symbol id="p-text"><text text-anchor="middle" x="40%" y="50%" dy=".35em">P</text></symbol>
+    <symbol id="e-text"><text text-anchor="middle" x="60%" y="50%" dy=".35em">E</text></symbol>
+    <symbol id="c-text"><text text-anchor="middle" x="80%" y="50%" dy=".35em">C</text></symbol>
+    <use class="text1" xlink:href="#s-text"></use>
+    <use class="text1" xlink:href="#s-text"></use>
+    <use class="text1" xlink:href="#s-text"></use>
+    <!-- <use class="text" xlink:href="#p-text"></use>
+    <use class="text" xlink:href="#p-text"></use>
+    <use class="text" xlink:href="#p-text"></use>
+    <use class="text" xlink:href="#p-text"></use>
+    <use class="text" xlink:href="#p-text"></use> -->
+    <use class="text1" xlink:href="#p-text"></use>
+    <!-- <use class="text1" xlink:href="#p-text"></use> -->
+    <use class="text1" xlink:href="#p-text"></use>
+    <use class="text1" xlink:href="#e-text"></use>
+    <use class="text1" xlink:href="#e-text"></use>
+    <use class="text1" xlink:href="#e-text"></use>
+    <use class="text1" xlink:href="#c-text"></use>
+    <!-- <use class="text1" xlink:href="#c-text"></use> -->
+    <use class="text1" xlink:href="#c-text"></use>
+    <!-- <use class="text2" id="c-usetag" xlink:href="#s-text"></use> -->
+    <!-- <use class="text2" id="g-usetag" xlink:href="#c-text"></use> -->
+  </svg>
+</div>
 {%if user.is_authenticated%}
-<p class="backup" style="position: fixed; bottom: 0">
-  <a class="btn btn-primary btn-lg" href="{% url 'dump_data' %}" role="button">Backup</a>
+<p class="backup" style="position: fixed; bottom: 0; right:0;">
+  <a class="btn btn-primary btn-lg mx-4" href="{% url 'dump_data' %}" role="button">Backup</a>
 </p>
 {% endif %}
 

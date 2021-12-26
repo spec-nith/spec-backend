@@ -9,14 +9,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
         integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 
+    <title>{% block title %}{% endblock title %}</title>
     <link rel="stylesheet" href="{%static 'style.css' %}">
     <link rel="stylesheet" href="{%static 'snackbar.css' %}">
-
-    <title>{% block title %}{% endblock title %}</title>
+    {%block link%}{%endblock link%}
 </head>
 
 <body>
-    {% include 'navbar.html' %}
     <div class="container d-flex justify-content-center">
         <div id="snackbar"></div>
 
@@ -31,6 +30,7 @@
         {% block content %}
         {% endblock %}
     </div>
+    {% include 'nav.html' %}
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
