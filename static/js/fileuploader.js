@@ -53,6 +53,7 @@ var total
                 fileInput.value = ""
                 total = 0
                 track = 0
+                snack("Files uploaded successfully", "w-3/5 bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 left-1/2 -translate-x-1/2")
             }
         }
         request.send(formData);

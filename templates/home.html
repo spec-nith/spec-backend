@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="{% static 'logo-anim.css' %}">
 {% endblock link %}
 {% block content %}
-<div id="svg-container">
-  <svg viewBox="0 0 1320 300">
+<div id="svg-container" class="flex justify-center items-center">
+  <svg class="mt-48" viewBox="0 0 1320 300">
     <defs>
       <pattern id="GPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"
         patternTransform="rotate(35)">
@@ -53,10 +53,4 @@
     <!-- <use class="text2" id="g-usetag" xlink:href="#c-text"></use> -->
   </svg>
 </div>
-{%if user.is_authenticated%}
-<p class="backup" style="position: fixed; bottom: 0; right:0;">
-  <a class="btn btn-primary btn-lg mx-4" href="{% url 'dump_data' %}" role="button">Backup</a>
-</p>
-{% endif %}
-
 {% endblock content %}

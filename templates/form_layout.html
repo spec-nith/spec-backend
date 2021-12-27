@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="h-screen md:flex overflow-hidden relative" style="background-color: #111;">
+    <div class="relative md:flex w-1/2 i justify-around items-center hidden">
+        <div>
+            {%block desc%}{%endblock desc%}
+        </div>
+        <div class="absolute -bottom-32 -left-40 w-80 h-80 border-4 border-gray-800 rounded-full border-opacity-30 border-t-8">
+        </div>
+        <div class="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8">
+        </div>
+    </div>
+    <div class="flex md:w-1/2 justify-center py-10 items-center">
+        {%block master_form%}
+        <form class="text-white" method="POST">
+            {%csrf_token%}
+            {%block form%}
+            
+            {%endblock form%}
+        </form>
+        {%endblock master_form%}
+    </div>
+    <div class="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+    <div class="absolute -top-20 -right-20 w-80 h-80 border-4 border-gray-500 rounded-full border-opacity-30 border-t-24"></div>
+</div>
+{% endblock content%}

@@ -10,7 +10,10 @@ from django.views.generic import CreateView
 from django.views.generic import TemplateView
 
 from api import models
+from api.forms import AlumniForm
 from api.forms import GalleryForm
+from api.forms import ProjectForm
+from api.forms import TeamForm
 from api.forms import WorkshopForm
 
 
@@ -38,7 +41,7 @@ def GalleryFormView(request):
             formset = GalleryForm(request.POST, {"image": file})
             if formset.is_valid():
                 formset.save()
-                return HttpResponse("Success")
+                context["message"] = "Successful"
 
             else:
                 return HttpResponseBadRequest(formset.errors)
@@ -56,7 +59,7 @@ def WorkshopFormView(request):
             context["message"] = "Successful"
 
         else:
-            context["error"] = form.errors
+            context["error"] = form.errors[next(iter(form.errors))]
 
     context["form"] = WorkshopForm()
     return render(request, "workshop.html", context)
@@ -66,33 +69,49 @@ class Home(TemplateView):
     template_name = "home.html"
 
 
-class TeamModelCreateView(CreateView):
-    model = models.TeamModel
-    fields = ["name", "title", "github_id", "linkedin_id", "profile_pic"]
-    template_name = "team.html"
-    success_url = "/"
+def TeamFormView(request):
+    context = {}
+    if request.method == "POST":
+        form = TeamForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            context["message"] = "Successful"
+
+        else:
+            context["error"] = form.errors[next(iter(form.errors))]
+
+    context["form"] = TeamForm()
+    return render(request, "team.html", context)
 
 
-class AlumniCreateView(CreateView):
-    model = models.Alumni
-    fields = [
-        "name",
-        "batch",
-        "dual_degree",
-        "company",
-        "github_id",
-        "linkedin_id",
-        "profile_pic",
-    ]
-    template_name = "alumni.html"
-    success_url = "/"
+def AlumniormView(request):
+    context = {}
+    if request.method == "POST":
+        form = AlumniForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            context["message"] = "Successful"
+
+        else:
+            context["error"] = form.errors[next(iter(form.errors))]
+
+    context["form"] = AlumniForm()
+    return render(request, "alumni.html", context)
 
 
-class ProjectCreateView(CreateView):
-    model = models.Project
-    fields = ["domain", "name", "year", "description", "github_link", "cover"]
-    template_name = "project.html"
-    success_url = "/"
+def ProjectFormView(request):
+    context = {}
+    if request.method == "POST":
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            context["message"] = "Successful"
+
+        else:
+            context["error"] = form.errors[next(iter(form.errors))]
+
+    context["form"] = ProjectForm()
+    return render(request, "project.html", context)
 
 
 def TeamUpdateView(request, pk):

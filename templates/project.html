@@ -1,14 +1,82 @@
-{% extends 'base.html' %}
-{% block title %}SPEC Projects {% endblock title %}
-{% block content %}
-<div>
-    <h2>Projects</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <button class="btn btn-success " type="submit">Save</button>
-    </form>
-</div>
-{% endblock content %}
+{% extends 'form_layout.html' %}
+{% block title %}Project{% endblock title %}
+{% block link %}
+<style>
+    input#id_event_date {
+        display: inline-block;
+        position: relative;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+</style>
+{% endblock link %}
+{%block desc%}
+<h1 class="text-white font-bold text-4xl font-sans">Project</h1>
+<p class="text-white mt-1">Add a new project in the catalogue</p>
+{%endblock desc%}
+{% block master_form %}
+<form class="text-white" method="POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 351.24">
+            <path
+                d="M456,752.25a35,35,0,0,1,4.23-2.24q84.06-30.48,168.19-60.82a10.19,10.19,0,0,1,6.39,0Q718.95,719.49,803,750.07c1.3.47,2.25,1.91,3.36,2.89-1.15,1-2.14,2.36-3.46,2.84q-85.68,31-171.44,61.74a9,9,0,0,1-5.69-.06Q542.54,786.82,459.41,756c-1.16-.43-2.27-1-3.41-1.45Z"
+                transform="translate(-456 -688.69)" fill="#a2a2a2" />
+            <path
+                d="M501.57,801.39c9.87,3.63,19.09,7,28.31,10.44q46.14,17.08,92.26,34.25c4.94,1.85,9.42,1.27,14.16-.45q58.07-21,116.17-41.9c1.26-.45,2.54-.87,4.32-1.47v4c0,25.49-.06,51,.07,76.48a12.45,12.45,0,0,1-4.48,10.16c-13,11.48-28.37,18.52-44.72,23.54-31.08,9.54-63,11.5-95.27,10.14-22-.93-43.77-3.9-64.8-10.85-14.92-4.94-28.94-11.57-40.93-22a13.77,13.77,0,0,1-5.17-11.37c.18-25.49.08-51,.08-76.48Z"
+                transform="translate(-456 -688.69)" fill="#a2a2a2" />
+        </svg>
+        {{form.domain}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+        </svg>
+        {{form.name}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg class="h-5 w-5 text-gray-400" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 408.83 408.61">
+            <path
+                d="M852.6,734v292.3c-.26.88-.58,1.74-.76,2.63-3.87,18.87-15,31.36-33.17,37.54-2.73.92-5.59,1.45-8.39,2.16H486.11l-5-1.22c-22.44-5.4-37.28-24.17-37.32-47.55q-.1-65.07,0-130.13,0-74.66,0-149.3c0-23.37,14.83-42.56,37.37-47.33,8.07-1.7,16.65-1,25-1.41,1.52-.07,3,0,4.85,0V660h31.85v31.44H753.69V660h32v31.66c6.91,0,13.54-.2,20.15,0,15.42.55,27.81,7.09,37.27,19.3C848.36,717.82,850.79,725.76,852.6,734Zm-31.94,76.15H475.73v207.45c0,13,6,19.08,19,19.08h307c13,0,19-6,19-19V810.12ZM475.75,777.56H820.56c0-13.28.31-26.43-.13-39.57-.23-6.67-4.25-12.12-10.79-13.3-7.82-1.41-16-1-24.28-1.46v32H753.5V723.83H542.66v31.51H510.8V723.7c-7.19,0-14-.35-20.71.09a15.44,15.44,0,0,0-14.29,15.52C475.61,752,475.75,764.59,475.75,777.56Z"
+                transform="translate(-443.77 -659.99)" fill="#a2a2a2" />
+        </svg>
+        {{form.year}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 120.78 117.79">
+            <path
+                d="M71.88,12.74a60.4,60.4,0,0,0-19.1,117.69c3,.56,4.13-1.31,4.13-2.91,0-1.44-.06-6.2-.08-11.24-16.8,3.65-20.35-7.13-20.35-7.13-2.74-7-6.7-8.83-6.7-8.83-5.48-3.75.41-3.67.41-3.67,6.06.42,9.26,6.22,9.26,6.22,5.38,9.23,14.13,6.56,17.57,5,.54-3.9,2.11-6.57,3.84-8.08C47.44,98.29,33.34,93.11,33.34,70a23.39,23.39,0,0,1,6.22-16.21c-.62-1.52-2.69-7.66.59-16,0,0,5.07-1.62,16.61,6.19A57.32,57.32,0,0,1,87,44c11.53-7.81,16.59-6.19,16.59-6.19,3.29,8.32,1.22,14.46.6,16A23.34,23.34,0,0,1,110.4,70c0,23.2-14.13,28.3-27.57,29.8,2.16,1.87,4.09,5.55,4.09,11.18,0,8.08-.07,14.58-.07,16.57,0,1.61,1.09,3.49,4.15,2.9A60.4,60.4,0,0,0,71.88,12.74Z"
+                transform="translate(-11.49 -12.74)" fill="#9CA3AF" fill-rule="evenodd" />
+        </svg>
+        {{form.github_link}}
+    </div>
+    {{form.description}}
+    <div class="py-2 px-3 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+        {{form.cover}}
+    </div>
+    <button type="submit"
+        class="block w-full border-2 border-gray-500 bg-transparent hover:bg-white hover:text-black mt-8 py-2 rounded-xl text-white mb-2">Save</button>
+    {%if error%}
+    <script>
+        snack("{{error.0}}", "w-3/5 bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 left-1/2 -translate-x-1/2")
+    </script>
+    {%endif%}
+    {%if message%}
+    <script>
+        snack("{{message}}", "w-3/5 bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 left-1/2 -translate-x-1/2")
+    </script>
+    {%endif%}
+</form>
+{% endblock master_form%}

@@ -1,13 +1,43 @@
-<footer class="footer p-4">
-    <a class="footer-link mx-3" href="{%url 'home'%}">Home</a>
-    <a class="footer-link mx-3" href="{%url 'gallery'%}">Gallery</a>
-    <a class="footer-link mx-3" href="{%url 'workshop'%}">Workshops</a>
-    <a class="footer-link mx-3" href="{%url 'team'%}">Team</a>
-    <a class="footer-link mx-3" href="{%url 'alumni'%}">Alumni</a>
-    <a class="footer-link mx-3" href="{%url 'project'%}">Projects</a>
-    {%if user.is_authenticated%}
-    <a href="{%url 'logout'%}">Logout</a>
-    {%else%}
-    <a href="{%url 'login'%}">Login</a>
-    {%endif%}
-</footer>
+<header class="text-gray-600 bg-transparent body-font bottom-0 fixed w-full">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+            <span class="ml-3 text-xl">SPEC</span>
+        </a>
+        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base text-gray-400 justify-center">
+            <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'home'%}">Home</a>
+            <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'gallery'%}">Gallery</a>
+            <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'workshop'%}">Workshops</a>
+            <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'team'%}">Team</a>
+            <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'alumni'%}">Alumni</a>
+            <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'project'%}">Projects</a>
+        </nav>
+        {%if user.is_authenticated%}
+        <a href="{% url 'dump_data' %}" class="mx-8">
+            <button
+                class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black">Backup
+            </button>
+        </a>
+
+        <a href="{%url 'logout'%}">
+            <button
+                class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black ">Logout
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </a>
+        <!-- <a class="btn btn-primary btn-lg mx-4" href="{% url 'dump_data' %}" role="button">Backup</a> -->
+        {%else%}
+        <a href="{%url 'login'%}">
+            <button
+                class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black ">Login
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </a>
+        {%endif%}  
+    </div>
+</header>

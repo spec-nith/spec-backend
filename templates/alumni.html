@@ -1,14 +1,90 @@
-{% extends 'base.html' %}
-{% block title %}SPEC Alumni{% endblock title %}
-{% block content %}
-<div>
-    <h2>Alumni</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <button class="btn btn-success " type="submit">Save</button>
-    </form>
-</div>
-{% endblock content %}
+{% extends 'form_layout.html' %}
+{% block title %}Alumni{% endblock title %}
+{% block link %}
+<style>
+    input#id_event_date {
+        display: inline-block;
+        position: relative;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background: transparent;
+        bottom: 0;
+        color: transparent;
+        cursor: pointer;
+        height: auto;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: auto;
+    }
+</style>
+{% endblock link %}
+{%block desc%}
+<h1 class="text-white font-bold text-4xl font-sans">Alumni</h1>
+<p class="text-white mt-1">Add new SPEC Alumni</p>
+{%endblock desc%}
+{% block master_form %}
+<form class="text-white" method="POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+        </svg>
+        {{form.name}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg class="h-5 w-5 text-gray-400 pointer-events-none" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 408.8 359.43">
+            <path
+                d="M852.6,742v269.87a4.19,4.19,0,0,0-.5,1.08c-2.51,18-18,30.93-37.27,30.91q-166.65-.17-333.31-.1a40.89,40.89,0,0,1-10.64-1.27c-17.3-4.77-27.07-18.3-27.08-37.14q0-129.14,0-258.27c0-10.37,4.36-14.66,14.88-14.66H564.36c0-4.11,0-7.57,0-11,.32-21.3,15.59-36.73,36.9-36.84,31.26-.16,62.54-.22,93.8.13a41,41,0,0,1,16.5,3.7c13.7,6.42,20,18,20.45,33,.1,3.66,0,7.32,0,11.09h5.43c33.27,0,66.53.13,99.8-.1C844.82,732.3,850.17,734.55,852.6,742ZM588.32,900.13H523.45c-18.86,0-31.4-9.07-37.37-27Q478,849,470,824.77c-.49-1.44-1-2.86-1.58-4.29l-.63.12v184.22c0,10.92,4.21,15.07,15.28,15.07H813.51c11,0,15.14-4.19,15.14-15.2V820.59a5.79,5.79,0,0,0-1.7,2.81q-8.33,24.95-16.66,49.89c-5.92,17.69-18.51,26.82-37.08,26.83q-30.33,0-60.67,0h-4.46c0,4.1,0,7.68,0,11.25-.14,7.6-4.94,12.65-12.44,12.66q-47.5.12-95,0c-7.3,0-12.13-5-12.3-12.4C588.25,908,588.32,904.25,588.32,900.13ZM472.62,756.58c.23.85.36,1.48.57,2.08q18,54.06,36,108.11c2.28,6.79,6.16,9.38,13.55,9.4q31.13,0,62.26,0c1,0,2-.16,3.28-.27,0-3.67,0-7.12,0-10.55.1-8.28,4.9-13.09,13.24-13.1q46.7-.06,93.39,0c8.29,0,13,4.87,13.13,13.2,0,3.53,0,7.06,0,10.74h64c9.52,0,12.74-2.33,15.75-11.38q12.68-38,25.34-76c3.56-10.68,7.09-21.37,10.69-32.24Zm115.7-24.33H708.08c0-3.89.07-7.59,0-11.27-.17-7.51-5.06-12.33-12.64-12.46-4.39-.08-8.78,0-13.16,0q-40.28,0-80.56,0c-8.56,0-13.3,4.79-13.38,13.33C588.29,725.17,588.32,728.49,588.32,732.25Zm24.14,167.61h71.35V876.38H612.46Z"
+                transform="translate(-443.8 -684.47)" fill="#a2a2a2" />
+        </svg>
+        {{form.company}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 351.24">
+            <path
+                d="M456,752.25a35,35,0,0,1,4.23-2.24q84.06-30.48,168.19-60.82a10.19,10.19,0,0,1,6.39,0Q718.95,719.49,803,750.07c1.3.47,2.25,1.91,3.36,2.89-1.15,1-2.14,2.36-3.46,2.84q-85.68,31-171.44,61.74a9,9,0,0,1-5.69-.06Q542.54,786.82,459.41,756c-1.16-.43-2.27-1-3.41-1.45Z"
+                transform="translate(-456 -688.69)" fill="#a2a2a2" />
+            <path
+                d="M501.57,801.39c9.87,3.63,19.09,7,28.31,10.44q46.14,17.08,92.26,34.25c4.94,1.85,9.42,1.27,14.16-.45q58.07-21,116.17-41.9c1.26-.45,2.54-.87,4.32-1.47v4c0,25.49-.06,51,.07,76.48a12.45,12.45,0,0,1-4.48,10.16c-13,11.48-28.37,18.52-44.72,23.54-31.08,9.54-63,11.5-95.27,10.14-22-.93-43.77-3.9-64.8-10.85-14.92-4.94-28.94-11.57-40.93-22a13.77,13.77,0,0,1-5.17-11.37c.18-25.49.08-51,.08-76.48Z"
+                transform="translate(-456 -688.69)" fill="#a2a2a2" />
+        </svg>
+        {{form.batch}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24">
+            <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                fill="#a2a2a2" />
+        </svg>
+        {{form.linkedin_id}}
+    </div>
+    <div class="flex items-center border-b-2 py-2 px-3 title mb-4">
+        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 120.78 117.79">
+            <path
+                d="M71.88,12.74a60.4,60.4,0,0,0-19.1,117.69c3,.56,4.13-1.31,4.13-2.91,0-1.44-.06-6.2-.08-11.24-16.8,3.65-20.35-7.13-20.35-7.13-2.74-7-6.7-8.83-6.7-8.83-5.48-3.75.41-3.67.41-3.67,6.06.42,9.26,6.22,9.26,6.22,5.38,9.23,14.13,6.56,17.57,5,.54-3.9,2.11-6.57,3.84-8.08C47.44,98.29,33.34,93.11,33.34,70a23.39,23.39,0,0,1,6.22-16.21c-.62-1.52-2.69-7.66.59-16,0,0,5.07-1.62,16.61,6.19A57.32,57.32,0,0,1,87,44c11.53-7.81,16.59-6.19,16.59-6.19,3.29,8.32,1.22,14.46.6,16A23.34,23.34,0,0,1,110.4,70c0,23.2-14.13,28.3-27.57,29.8,2.16,1.87,4.09,5.55,4.09,11.18,0,8.08-.07,14.58-.07,16.57,0,1.61,1.09,3.49,4.15,2.9A60.4,60.4,0,0,0,71.88,12.74Z"
+                transform="translate(-11.49 -12.74)" fill="#9CA3AF" fill-rule="evenodd" />
+        </svg>
+        {{form.github_id}}
+    </div>
+    <div class="py-2 px-3 mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+        {{form.profile_pic}}
+    </div>
+    <button type="submit"
+        class="block w-full border-2 border-gray-500 bg-transparent hover:bg-white hover:text-black mt-8 py-2 rounded-xl text-white mb-2">Save</button>
+    {%if error%}
+    <script>
+        snack("{{error.0}}", "w-3/5 bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 fixed bottom-0 left-1/2 -translate-x-1/2")
+    </script>
+    {%endif%}
+    {%if message%}
+    <script>
+        snack("{{message}}", "w-3/5 bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 fixed bottom-0 left-1/2 -translate-x-1/2")
+    </script>
+    {%endif%}
+</form>
+{% endblock master_form%}
