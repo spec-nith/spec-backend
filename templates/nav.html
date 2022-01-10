@@ -1,4 +1,4 @@
-<header class="text-gray-600 bg-transparent body-font bottom-0 fixed w-full">
+<header class="text-gray-600 bg-transparent body-font md:bottom-0 md:fixed w-full">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
             <span class="ml-3 text-xl">SPEC</span>
@@ -12,21 +12,23 @@
             <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'project'%}">Projects</a>
         </nav>
         {%if user.is_authenticated%}
-        <a href="{% url 'dump_data' %}" class="mx-8">
-            <button
-                class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black">Backup
-            </button>
-        </a>
+        <div class="flex space-x-4 pt-4 md:pt-0">
+            <a href="{% url 'dump_data' %}" class="md:mx-8 w-1/2">
+                <button
+                    class="p-3 w-full border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black text-center">Backup
+                </button>
+            </a>
+            <a href="{%url 'logout'%}" class="w-1/2">
+                <button
+                    class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black ">Logout
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </a>
+        </div>
 
-        <a href="{%url 'logout'%}">
-            <button
-                class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black ">Logout
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                    <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-            </button>
-        </a>
         <!-- <a class="btn btn-primary btn-lg mx-4" href="{% url 'dump_data' %}" role="button">Backup</a> -->
         {%else%}
         <a href="{%url 'login'%}">
@@ -38,6 +40,6 @@
                 </svg>
             </button>
         </a>
-        {%endif%}  
+        {%endif%}
     </div>
 </header>
