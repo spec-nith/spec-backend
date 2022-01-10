@@ -1,7 +1,7 @@
 <header class="text-gray-600 bg-transparent body-font md:bottom-0 md:fixed w-full">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-            <span class="ml-3 text-xl">SPEC</span>
+            <span class="ml-0 md:ml-3 text-xl">SPEC</span>
         </a>
         <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base text-gray-400 justify-center">
             <a class="mr-5 hover:text-gray-700 cursor-pointer" href="{%url 'home'%}">Home</a>
@@ -31,7 +31,7 @@
 
         <!-- <a class="btn btn-primary btn-lg mx-4" href="{% url 'dump_data' %}" role="button">Backup</a> -->
         {%else%}
-        <a href="{%url 'login'%}">
+        <a href="{%url 'login'%}" class="mt-4">
             <button
                 class="p-3 items-center flex border-2 border-gray-500 rounded-md text-base hover:bg-white hover:border-gray-200 cursor-pointer hover:text-black ">Login
                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
