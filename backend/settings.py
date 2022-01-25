@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEVELOPMENT")
-
+ENABLE_PRODUCTION = env("PRODUCTION", default=False)
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "127.0.0.1",
@@ -164,7 +164,7 @@ MEDIA_URL = "/media/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-if not DEBUG:
+if ENABLE_PRODUCTION or not DEBUG:
     import django_heroku
 
     # DropBox File Storage
