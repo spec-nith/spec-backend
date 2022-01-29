@@ -23,7 +23,7 @@ class TeamModelTests(APITestCase):
         url = "/api/team/"
         data = {"name": "team member", "title": "volunteer"}
         response = self.client.post(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_team_model_api_get(self):
         url = "/api/team/"
@@ -62,7 +62,7 @@ class WorkshopTests(APITestCase):
             "venue_url": "XYZ",
         }
         response = self.client.post(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_workshop_api_get(self):
         url = "/api/workshop/"
@@ -90,7 +90,7 @@ class GalleryTests(APITestCase):
         url = "/api/gallery/"
         data = {"event": "abc event", "year": "2019", "sub_event": "xyz event"}
         response = self.client.post(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_gallery_api_get(self):
         url = "/api/gallery/"
@@ -131,7 +131,7 @@ class AlumniTests(APITestCase):
             "linkedin_id": "https://www.linkedin.com/",
         }
         response = self.client.post(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_alumni_api_get(self):
         url = "/api/alumni/"
@@ -174,7 +174,7 @@ class ProjectTests(APITestCase):
             "github_link": "https://github.com/project",
         }
         response = self.client.post(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_project_api_get(self):
         url = "/api/projects/"

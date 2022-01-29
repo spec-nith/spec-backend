@@ -63,3 +63,6 @@ build/
 # Coverage Test Reports
 .coverage
 htmlcov
+
+# Backup Files
+backup

@@ -23,7 +23,7 @@ urlpatterns = [
     path("gallery/", login_required(views.GalleryFormView), name="gallery"),
     path("workshop/", login_required(views.WorkshopFormView), name="workshop"),
     path("team/", login_required(views.TeamFormView), name="team"),
-    path("alumni/", login_required(views.AlumniormView), name="alumni"),
+    path("alumni/", login_required(views.AlumniFormView), name="alumni"),
     path("project/", login_required(views.ProjectFormView), name="project"),
     path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls")),

@@ -2,12 +2,13 @@ from datetime import datetime
 
 from django.core import serializers
 from django.http.response import HttpResponseBadRequest
-from django.http.response import JsonResponse
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
-from django.utils.timezone import make_aware
-from django.views.generic import CreateView
 from django.views.generic import TemplateView
+from dropbox.exceptions import ApiError
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from api import models
 from api.forms import AlumniForm
@@ -84,7 +85,7 @@ def TeamFormView(request):
     return render(request, "team.html", context)
 
 
-def AlumniormView(request):
+def AlumniFormView(request):
     context = {}
     if request.method == "POST":
         form = AlumniForm(request.POST, request.FILES)
@@ -114,46 +115,76 @@ def ProjectFormView(request):
     return render(request, "project.html", context)
 
 
+@api_view(["GET"])
 def TeamUpdateView(request, pk):
     try:
         obj = models.TeamModel.objects.all().order_by("pk")[pk]
         obj.update_team_image_url()
-        return JsonResponse({"message": f"Updated"})
+        return Response({"message": f"Updated"})
     except IndexError:
-        return JsonResponse({"message": "Does not exist"})
+        return Response({"message": "Does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    except ApiError:
+        return Response(
+            {"message": f"File does not exist for {pk}"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
 
 
+@api_view(["GET"])
 def WorkshopUpdateView(request, pk):
     try:
         obj = models.Workshop.objects.all().order_by("pk")[pk]
         obj.update_workshop_cover_url()
-        return JsonResponse({"message": "Updated"})
+        return Response({"message": f"Updated"})
     except IndexError:
-        return JsonResponse({"message": "Does not exist"})
+        return Response({"message": "Does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    except ApiError:
+        return Response(
+            {"message": f"File does not exist for {pk}"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
 
 
+@api_view(["GET"])
 def GalleryUpdateView(request, pk):
     try:
         obj = models.Gallery.objects.all().order_by("pk")[pk]
         obj.update_gallery_image_url()
-        return JsonResponse({"message": "Updated"})
+        return Response({"message": f"Updated"})
     except IndexError:
-        return JsonResponse({"message": "Does not exist"})
+        return Response({"message": "Does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    except ApiError:
+        return Response(
+            {"message": f"File does not exist for {pk}"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
 
 
+@api_view(["GET"])
 def AlumniUpdateView(request, pk):
     try:
         obj = models.Alumni.objects.all().order_by("pk")[pk]
         obj.update_alumni_image_url()
-        return JsonResponse({"message": "Updated"})
+        return Response({"message": f"Updated"})
     except IndexError:
-        return JsonResponse({"message": "Does not exist"})
+        return Response({"message": "Does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    except ApiError:
+        return Response(
+            {"message": f"File does not exist for {pk}"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
 
 
+@api_view(["GET"])
 def ProjectUpdateView(request, pk):
     try:
         obj = models.Project.objects.all().order_by("pk")[pk]
         obj.update_project_cover_url()
-        return JsonResponse({"message": "Updated"})
+        return Response({"message": f"Updated"})
     except IndexError:
-        return JsonResponse({"message": "Does not exist"})
+        return Response({"message": "Does not exist"}, status=status.HTTP_404_NOT_FOUND)
+    except ApiError:
+        return Response(
+            {"message": f"File does not exist for {pk}"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
