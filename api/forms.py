@@ -25,7 +25,7 @@ class GalleryForm(forms.ModelForm):
     sub_event = forms.CharField(
         max_length=100,
         label="Sub Event",
-        required=False,
+        required=True,
         widget=widgets.TextInput(
             attrs={
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
@@ -198,6 +198,7 @@ class TeamForm(forms.ModelForm):
     )
 
     github_id = forms.URLField(
+        required=False,
         widget=forms.URLInput(
             attrs={
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
@@ -207,6 +208,7 @@ class TeamForm(forms.ModelForm):
     )
 
     linkedin_id = forms.URLField(
+        required=False,
         widget=forms.URLInput(
             attrs={
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
@@ -249,6 +251,7 @@ class AlumniForm(forms.ModelForm):
     )
 
     github_id = forms.URLField(
+        required=False,
         widget=forms.URLInput(
             attrs={
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
