@@ -14,8 +14,17 @@ TEAM_FIELDS = (
     "github_id",
     "linkedin_id",
     "profile_pic_url",
+    "profile_pic_webp_url",
 )
-WORKSHOP_FIELDS = ("id", "title", "description", "venue", "event_date", "cover_url")
+WORKSHOP_FIELDS = (
+    "id",
+    "title",
+    "description",
+    "venue",
+    "event_date",
+    "cover_url",
+    "cover_webp_url",
+)
 GALLERY_FIELDS = ("id", "event", "sub_event", "year", "image_url", "thumb_image_url")
 ALUMNI_FIELDS = (
     "id",
@@ -26,6 +35,7 @@ ALUMNI_FIELDS = (
     "github_id",
     "linkedin_id",
     "profile_pic_url",
+    "profile_pic_webp_url",
 )
 PROJECT_FIELDS = (
     "id",
@@ -35,6 +45,7 @@ PROJECT_FIELDS = (
     "description",
     "github_link",
     "cover_url",
+    "cover_webp_url",
 )
 
 
@@ -48,7 +59,7 @@ class TeamSerializer(serializers.HyperlinkedModelSerializer):
 class TeamViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TeamModel.objects.values(*TEAM_FIELDS)
     serializer_class = TeamSerializer
-    filterset_fields = TEAM_FIELDS
+    filterset_fields = TEAM_FIELDS[:-2]
 
 
 class WorkshopSerializer(serializers.HyperlinkedModelSerializer):
@@ -61,7 +72,7 @@ class WorkshopSerializer(serializers.HyperlinkedModelSerializer):
 class WorkshopViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Workshop.objects.values(*WORKSHOP_FIELDS)
     serializer_class = WorkshopSerializer
-    filterset_fields = WORKSHOP_FIELDS[:-1]
+    filterset_fields = WORKSHOP_FIELDS[:-2]
 
 
 class GallerySerializer(serializers.HyperlinkedModelSerializer):
@@ -88,7 +99,7 @@ class AlumniSerializer(serializers.HyperlinkedModelSerializer):
 class AlumniViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Alumni.objects.values(*ALUMNI_FIELDS)
     serializer_class = AlumniSerializer
-    filterset_fields = ALUMNI_FIELDS[:-1]
+    filterset_fields = ALUMNI_FIELDS[:-2]
 
 
 class ProjectSerializer(serializers.HyperlinkedModelSerializer):
@@ -101,4 +112,4 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.values(*PROJECT_FIELDS)
     serializer_class = ProjectSerializer
-    filterset_fields = PROJECT_FIELDS[:-1]
+    filterset_fields = PROJECT_FIELDS[:-2]

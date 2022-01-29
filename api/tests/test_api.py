@@ -34,6 +34,7 @@ class TeamModelTests(APITestCase):
             "github_id": "https://github.com/tm",
             "linkedin_id": "https://www.linkedin.com/tm",
             "profile_pic_url": None,
+            "profile_pic_webp_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -73,6 +74,7 @@ class WorkshopTests(APITestCase):
             "event_date": "2019-09-25T11:30:00+05:30",
             "venue": "XYZ",
             "cover_url": None,
+            "cover_webp_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -144,6 +146,7 @@ class AlumniTests(APITestCase):
             "github_id": "https://github.com/abc",
             "linkedin_id": "https://www.linkedin.com/",
             "profile_pic_url": None,
+            "profile_pic_webp_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -186,6 +189,7 @@ class ProjectTests(APITestCase):
             "year": 2019,
             "github_link": "https://github.com/project",
             "cover_url": None,
+            "cover_webp_url": None,
         }
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
