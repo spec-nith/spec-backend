@@ -1,3 +1,8 @@
+from datetime import date
+from datetime import datetime
+from datetime import timezone
+from time import strptime
+
 from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.test import TestCase
@@ -69,10 +74,12 @@ class TeamModelTest(TestCase):
 class WorkshopTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        dt = datetime.now()
+        dt = dt.replace(tzinfo=timezone.utc)
         Workshop.objects.create(
             title="first workshop",
             description="workshop description here",
-            event_date="2019-09-25 06:00:00+00:00",
+            event_date=dt,
             venue="XYZ",
             cover=File(open(DUMMY_PATH, "rb")),
         )
@@ -89,8 +96,8 @@ class WorkshopTest(TestCase):
 
     def test_workshop_event_date(self):
         workshop = Workshop.objects.get(id=1)
-        expected_object_name = f"{workshop.event_date}"
-        self.assertEquals(expected_object_name, "2019-09-25 06:00:00+00:00")
+        expected_object_name = workshop.event_date
+        self.assertEquals(type(expected_object_name), datetime)
 
     def test_workshop_venue(self):
         workshop = Workshop.objects.get(id=1)
