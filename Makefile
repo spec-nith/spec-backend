@@ -18,7 +18,7 @@ genkey: virtualenv
 	@echo "-> Generating Secret key"
 	@if test -f ${ENV_FILE}; then echo ".env file exists already"; true; else \
 	mkdir -p $(shell dirname ${ENV_FILE}) && touch ${ENV_FILE}; \
-	echo DJANGO_SECRET_KEY=\"${GET_SECRET_KEY}\" > ${ENV_FILE}; \
+	echo SECRET_KEY=\"${GET_SECRET_KEY}\" > ${ENV_FILE}; \
 	cat etc/env.txt >> ${ENV_FILE}; fi
 
 install: genkey
