@@ -1,7 +1,7 @@
 @ECHO OFF
 REM Setting all the environent variables for smoother experience
 SET PYTHON_EXE=python
-SET MANAGE=.\Scripts\python manage.py
+SET MANAGE=.\venv\Scripts\python manage.py
 SET ENV_FILE=.env
 SET DJANGO_PORT=8000
 SET AUTOFLAKE_ARGS=--in-place --remove-all-unused-imports --ignore-init-module-imports --ignore-init-module-imports -r
@@ -74,7 +74,7 @@ EXIT /B 0
 
 :virtualenv
 	ECHO - Making Virtual Environment
-	%PYTHON_EXE% -m venv .
+	%PYTHON_EXE% -m venv venv
     EXIT /B 0
 
 :genkey

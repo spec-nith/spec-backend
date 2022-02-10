@@ -33,6 +33,7 @@ lib64
 share/
 include/
 Scripts/
+venv
 
 # Sublime Text # 
 *.tmlanguage.cache 

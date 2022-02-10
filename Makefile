@@ -1,6 +1,6 @@
 PYTHON_EXE?=python3
-MANAGE=bin/python manage.py
-ACTIVATE?=. bin/activate;
+MANAGE=venv/bin/python manage.py
+ACTIVATE?=. venv/bin/activate;
 GET_SECRET_KEY=`base64 /dev/urandom | head -c50`
 ENV_FILE=.env
 AUTOFLAKE_ARGS=--in-place --remove-all-unused-imports --ignore-init-module-imports --ignore-init-module-imports -r
@@ -12,13 +12,14 @@ virtualenv:
 	@echo "-> Getting Essential Build Files"
 	@sudo apt-get install python3-venv
 	@echo "-> Making Virtual Environment"
-	@${PYTHON_EXE} -m venv .
+	@${PYTHON_EXE} -m venv venv
 
 genkey: virtualenv
 	@echo "-> Generating Secret key"
-	@if test -f ${ENV_FILE}; then echo ".env file exists already"; true; fi
-	@mkdir -p $(shell dirname ${ENV_FILE}) && touch ${ENV_FILE}
-	@echo SECRET_KEY=\"${GET_SECRET_KEY}\"\\nDEVELOPMENT=True > ${ENV_FILE}
+	@if test -f ${ENV_FILE}; then echo ".env file exists already"; true; else \
+	mkdir -p $(shell dirname ${ENV_FILE}) && touch ${ENV_FILE}; \
+	echo DJANGO_SECRET_KEY=\"${GET_SECRET_KEY}\" > ${ENV_FILE}; \
+	cat etc/env.txt >> ${ENV_FILE}; fi
 
 install: genkey
 	@echo "-> Installing Dependencies"
