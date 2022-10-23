@@ -6,6 +6,8 @@ from api.models import Gallery
 from api.models import Project
 from api.models import TeamModel
 from api.models import Workshop
+from api.models import MemberRegistration
+from api.models import Attendees
 
 TEAM_FIELDS = (
     "id",
@@ -46,6 +48,33 @@ PROJECT_FIELDS = (
     "github_link",
     "cover_url",
     "cover_webp_url",
+)
+MEMBER_REGISTRATION_FIELDS = (
+    "id",
+    "name",
+    "email",
+    "gender",
+    "roll_no",
+    "degree",
+    "branch",
+    "year",
+    "phone",
+    "home_state",
+    "skills",
+    "strength", 
+    "weakness",
+    "achievement",
+    "application_response",
+    "supporting_docs_link",
+    "photograph_link",
+    "sign_link",
+    "acknowledgement",
+)
+WORKSHOP_REGISTRATION_FIELDS = (
+    "id",
+    "name",
+    "email",
+    "workshop",
 )
 
 
@@ -113,3 +142,28 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Project.objects.values(*PROJECT_FIELDS)
     serializer_class = ProjectSerializer
     filterset_fields = PROJECT_FIELDS[:-2]
+
+
+class MemberRegistrationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = MemberRegistration
+        fields = MEMBER_REGISTRATION_FIELDS
+        # read_only_fields = MEMBER_REGISTRATION_FIELDS
+
+
+class MemberRegistrationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MemberRegistration.objects.values(*MEMBER_REGISTRATION_FIELDS)
+    serializer_class = MemberRegistrationSerializer
+    filterset_fields = MEMBER_REGISTRATION_FIELDS[:-10]
+
+class WorkshopRegistrationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Attendees
+        fields = WORKSHOP_REGISTRATION_FIELDS
+        # read_only_fields = MEMBER_REGISTRATION_FIELDS
+
+
+class WorkshopRegistrationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Attendees.objects.values(*WORKSHOP_REGISTRATION_FIELDS)
+    serializer_class = WorkshopRegistrationSerializer
+    filterset_fields = WORKSHOP_REGISTRATION_FIELDS
