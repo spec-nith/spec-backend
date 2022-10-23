@@ -5,7 +5,8 @@ from api.models import Gallery
 from api.models import Project
 from api.models import TeamModel
 from api.models import Workshop
-
+from api.models import MemberRegistration
+from api.models import Attendees
 
 class TeamModelFilter(admin.ModelAdmin):
     list_display = ["name", "title", "github_id", "linkedin_id"]
@@ -14,7 +15,6 @@ class TeamModelFilter(admin.ModelAdmin):
 
 
 admin.site.register(TeamModel, TeamModelFilter)
-
 
 class WorkshopFilter(admin.ModelAdmin):
     list_display = ["title", "event_date", "venue"]
@@ -49,3 +49,17 @@ class ProjectFilter(admin.ModelAdmin):
 
 
 admin.site.register(Project, ProjectFilter)
+
+class MemberRegistrationFilter(admin.ModelAdmin):
+    list_display = ["name", "roll_no", "degree", "branch"]
+    list_filter = ["name", "degree", "branch"]
+    search_fields = ["name", "degree", "branch"]
+
+
+admin.site.register(MemberRegistration, MemberRegistrationFilter)
+
+class AttendeesAdmin(admin.ModelAdmin):
+    list_display = ["email", "name", "workshop"]
+    search_fields = ["email", "name"]
+
+admin.site.register(Attendees, AttendeesAdmin)

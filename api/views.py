@@ -1,4 +1,5 @@
 from datetime import datetime
+from rest_framework import generics
 
 from django.core import serializers
 from django.http.response import HttpResponseBadRequest
@@ -16,7 +17,15 @@ from api.forms import GalleryForm
 from api.forms import ProjectForm
 from api.forms import TeamForm
 from api.forms import WorkshopForm
+from api.forms import MemberRegistrationForm
+from api.forms import WorkshopRegistrationForm
+from api.serializer import MemberRegistrationSerializer
+from api.serializer import WorkshopRegistrationSerializer
 
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 def dump_data(request):
     all_objects = [
@@ -64,6 +73,38 @@ def WorkshopFormView(request):
 
     context["form"] = WorkshopForm()
     return render(request, "workshop.html", context)
+
+class WorkshopRegisterView(generics.ListCreateAPIView):
+    queryset = models.Attendees.objects.all()
+    form = WorkshopRegistrationForm()
+    serializer_class = WorkshopRegistrationSerializer
+    template_name = "workshop_register.html"
+
+    def post(self, request, *args, **kwargs):
+        context={}
+        # name = request.POST["name"]
+        email=request.POST['email']
+        form = WorkshopRegistrationForm(request.POST)
+
+        print("--------------------")
+        if form.is_valid():
+            form.save()
+            context["message"] = "Successful"
+        else:
+            context["error"] = form.errors[next(iter(form.errors))]
+
+        html_template = 'email_temp2.html'
+        html_message = render_to_string(html_template)
+        subject = 'Join our workshop'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [email]
+        message = EmailMessage(subject, html_message,email_from, recipient_list)
+        print(message)
+        message.content_subtype = 'html'
+        message.send()
+        print('email sent')
+        return render(request,"success.html",context)
+
 
 
 class Home(TemplateView):
@@ -114,6 +155,55 @@ def ProjectFormView(request):
     context["form"] = ProjectForm()
     return render(request, "project.html", context)
 
+# def MemberRegistrationFormView(request):
+#     context = {}
+#     print('test2')
+#     if request.method == "POST":
+#         email=request.POST('email')
+#         form = MemberRegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             context["message"] = "Successful"
+#         else:
+#             context["error"] = form.errors[next(iter(form.errors))]
+#         html_template = 'email_temp.html'
+#         html_message = render_to_string(html_template)
+#         subject = 'Welcome to SPEC'
+#         email_from = settings.EMAIL_HOST_USER
+#         recipient_list = [email]
+#         message = EmailMessage(subject, html_message,email_from, recipient_list)
+#         print(message)
+#         message.content_subtype = 'html'
+#         message.send()
+#         return redirect(request,"success.html")
+#     context["form"] = MemberRegistrationForm()
+#     return render(request, "member_register.html", context)
+
+class MemberRegistrationFormView(generics.ListCreateAPIView):
+    queryset = models.MemberRegistration.objects.all()
+    form = MemberRegistrationForm()
+    serializer_class = MemberRegistrationSerializer
+    template_name = "member_register.html"
+    def post(self, request, *args, **kwargs):
+        context={}
+        email=request.POST['email']
+        form = MemberRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context["message"] = "Successful"
+        else:
+            context["error"] = form.errors[next(iter(form.errors))]
+        html_template = 'email_temp.html'
+        html_message = render_to_string(html_template)
+        subject = 'Welcome to SPEC'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [email]
+        message = EmailMessage(subject, html_message,email_from, recipient_list)
+        print(message)
+        message.content_subtype = 'html'
+        message.send()
+        print('email sent')
+        return render(request,"success.html",context)
 
 @api_view(["GET"])
 def TeamUpdateView(request, pk):
