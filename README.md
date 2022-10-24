@@ -8,7 +8,7 @@
     <br>
     <a href="https://github.com/spec-nith/spec-backend/issues">Report Bug</a>
     ·
-    <a href="https://github.com/spec-nith/spec-backend/issues">Request Feature</a>
+    <a href="https://github.com/spec-nith/spec-backend/issues">Request a Feature</a>
   </p>
 </p>
 <br>
@@ -38,11 +38,11 @@ Visit the current official website of SPEC from [here](https://specnith.com/).
 
 - To install the base-dependencies of the project:
   ```
-  make install
+  make def
   ```
  - To install the environment with all its optional dependencies:  
     ```
-    make install_full
+    make install
     ```  
 - You can use `make` commands to perform various operations:
   
@@ -115,7 +115,7 @@ Contributions are what make the open source community such an amazing place to  
 
 - Clone your Fork to your local machine
   ```
-  git clone [https://github.com/your-username/spec-backend.git]
+  git clone [git@github.com:spec-nith/spec-backend.git]
   ```
          
 - Create your Feature Branch
