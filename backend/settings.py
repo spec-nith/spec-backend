@@ -31,8 +31,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEVELOPMENT")
 ENABLE_PRODUCTION = env("PRODUCTION", default=False)
-ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*").split(' ')
-CSRF_TRUSTED_ORIGINS = env("CSRF_HOSTS", default="*").split(' ')
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*").split(" ")
+CSRF_TRUSTED_ORIGINS = env("CSRF_HOSTS", default="http://localhost:8000/").split(" ")
 
 # Application definition
 
@@ -86,16 +86,24 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        'NAME': env('DBNAME'),
-        'HOST': env('DBHOST'),
-        'USER': env('DBUSER'),
-        'PASSWORD': env('DBPASS'),
+ENABLE_SQLITE = env("ENABLE_SQLITE", default=True)
+if ENABLE_SQLITE:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": env("DBNAME"),
+            "HOST": env("DBHOST"),
+            "USER": env("DBUSER"),
+            "PASSWORD": env("DBPASS"),
+        }
+    }
 
 SITE_ID = 1
 
@@ -153,7 +161,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 
 # EMAIL SETTINGS
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")

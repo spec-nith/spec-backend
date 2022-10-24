@@ -1,18 +1,17 @@
-PYTHON_EXE?=python3
-MANAGE=venv/bin/python manage.py
-ACTIVATE?=. venv/bin/activate;
+PYTHON?=python3
+ACTIVATE?=. .venv/bin/activate;
+MANAGE=${ACTIVATE} ${PYTHON} manage.py
+TEST_SETTINGS=--settings=backend.test_settings
 GET_SECRET_KEY=`base64 /dev/urandom | head -c50`
 ENV_FILE=.env
-AUTOFLAKE_ARGS=--in-place --remove-all-unused-imports --ignore-init-module-imports --ignore-init-module-imports -r
+BLACK_ARGS=--extend-exclude="migrations|data|lib|etc|.venv" .
 
 # Default Django Port
 PORT = 8000
 
 virtualenv:
-	@echo "-> Getting Essential Build Files"
-	@sudo apt-get install python3-venv
 	@echo "-> Making Virtual Environment"
-	@${PYTHON_EXE} -m venv venv
+	@${PYTHON} -m venv .venv
 
 genkey: virtualenv
 	@echo "-> Generating Secret key"
@@ -21,19 +20,23 @@ genkey: virtualenv
 	echo SECRET_KEY=\"${GET_SECRET_KEY}\" > ${ENV_FILE}; \
 	cat etc/env.txt >> ${ENV_FILE}; fi
 
+dev: genkey
+	@echo "-> Installing Dependencies"
+	@${ACTIVATE} pip3 install -r etc/dev.txt
+
+
 install: genkey
 	@echo "-> Installing Dependencies"
-	@${ACTIVATE} pip install -r etc/dev.txt
-
-
-install_full: genkey
-	@echo "-> Installing Dependencies"
-	@${ACTIVATE} pip install -r requirements.txt
+	@${ACTIVATE} pip3 install -r requirements.txt
 
 migrate:
+	${MANAGE} makemigrations
 	@echo "-> Apply database migrations"
-	${MANAGE} makemigrations api
 	${MANAGE} migrate
+
+collectstatic:
+	@echo "-> Collecting static files"
+	${MANAGE} collectstatic
 
 run:
 	${MANAGE} runserver ${PORT}
@@ -46,20 +49,26 @@ flush:
 	${MANAGE} flush
 
 format:
-	@echo "-> Run isort imports ordering validation"
-	@${ACTIVATE} isort api backend
+	@echo "-> Run isort imports validation"
+	@${ACTIVATE} isort .
 	@echo "-> Run black validation"
-	@${ACTIVATE} black api backend
+	@${ACTIVATE} black ${BLACK_ARGS}
 
 test:
-	@${MANAGE} test
-
+	@${MANAGE} test ${TEST_SETTINGS}
+	
 check: test
+	@echo "-> Run isort imports ordering validation"
+	@${ACTIVATE} isort --check-only .
 	@echo "-> Run black validation"
-	@${ACTIVATE} black --check api backend
+	@${ACTIVATE} black --check ${BLACK_ARGS}
 
 coverage: 
 	@echo "-> Generating coverage report"
-	@${ACTIVATE} coverage run --source='.' manage.py test
+	@${ACTIVATE} coverage erase
+	@${ACTIVATE} coverage run --source='.' manage.py test ${TEST_SETTINGS}
 	@${ACTIVATE} coverage report
 	@${ACTIVATE} coverage html
+
+superuser:
+	@${MANAGE} createsuperuser
