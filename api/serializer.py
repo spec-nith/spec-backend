@@ -8,6 +8,7 @@ from api.models import MemberRegistration
 from api.models import Project
 from api.models import TeamModel
 from api.models import Workshop
+from utils.mailer import send_mail
 
 TEAM_FIELDS = (
     "id",
@@ -150,6 +151,11 @@ class MemberRegistrationSerializer(serializers.HyperlinkedModelSerializer):
         fields = MEMBER_REGISTRATION_FIELDS
         # read_only_fields = MEMBER_REGISTRATION_FIELDS
 
+    def create(self, validated_data):
+        # Send Email
+        send_mail("email_temp.html", "Welcome to SPEC", [validated_data["email"]])
+        return super().create(validated_data)
+
 
 class MemberRegistrationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MemberRegistration.objects.values(*MEMBER_REGISTRATION_FIELDS)
@@ -162,6 +168,13 @@ class WorkshopRegistrationSerializer(serializers.HyperlinkedModelSerializer):
         model = Attendees
         fields = WORKSHOP_REGISTRATION_FIELDS
         # read_only_fields = MEMBER_REGISTRATION_FIELDS
+
+    def create(self, validated_data):
+        # Send Email
+        send_mail(
+            "email_temp2.html", "Workshop Registration", [validated_data["email"]]
+        )
+        return super().create(validated_data)
 
 
 class WorkshopRegistrationViewSet(viewsets.ReadOnlyModelViewSet):

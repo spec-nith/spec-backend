@@ -1,12 +1,9 @@
 from datetime import datetime
 
-from django.conf import settings
 from django.core import serializers
-from django.core.mail import EmailMessage
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 from dropbox.exceptions import ApiError
 from rest_framework import generics
@@ -17,11 +14,9 @@ from rest_framework.response import Response
 from api import models
 from api.forms import AlumniForm
 from api.forms import GalleryForm
-from api.forms import MemberRegistrationForm
 from api.forms import ProjectForm
 from api.forms import TeamForm
 from api.forms import WorkshopForm
-from api.forms import WorkshopRegistrationForm
 from api.serializer import MemberRegistrationSerializer
 from api.serializer import WorkshopRegistrationSerializer
 
@@ -76,34 +71,13 @@ def WorkshopFormView(request):
 
 class WorkshopRegisterView(generics.ListCreateAPIView):
     queryset = models.Attendees.objects.all()
-    form = WorkshopRegistrationForm()
     serializer_class = WorkshopRegistrationSerializer
-    template_name = "workshop_register.html"
 
-    def post(self, request, *args, **kwargs):
-        context = {}
-        # name = request.POST["name"]
-        email = request.POST["email"]
-        form = WorkshopRegistrationForm(request.POST)
-
-        print("--------------------")
-        if form.is_valid():
-            form.save()
-            context["message"] = "Successful"
-        else:
-            context["error"] = form.errors[next(iter(form.errors))]
-
-        html_template = "email_temp2.html"
-        html_message = render_to_string(html_template)
-        subject = "Join our workshop"
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [email]
-        message = EmailMessage(subject, html_message, email_from, recipient_list)
-        print(message)
-        message.content_subtype = "html"
-        message.send()
-        print("email sent")
-        return render(request, "success.html", context)
+    def create(self, request):
+        data = self.get_serializer(data=request.data)
+        data.is_valid(raise_exception=True)
+        data.save()
+        return Response({"success": True})
 
 
 class Home(TemplateView):
@@ -166,15 +140,7 @@ def ProjectFormView(request):
 #             context["message"] = "Successful"
 #         else:
 #             context["error"] = form.errors[next(iter(form.errors))]
-#         html_template = 'email_temp.html'
-#         html_message = render_to_string(html_template)
-#         subject = 'Welcome to SPEC'
-#         email_from = settings.EMAIL_HOST_USER
-#         recipient_list = [email]
-#         message = EmailMessage(subject, html_message,email_from, recipient_list)
-#         print(message)
-#         message.content_subtype = 'html'
-#         message.send()
+#         send_mail("email_temp.html", "Welcome to SPEC", [email])
 #         return redirect(request,"success.html")
 #     context["form"] = MemberRegistrationForm()
 #     return render(request, "member_register.html", context)
@@ -182,30 +148,13 @@ def ProjectFormView(request):
 
 class MemberRegistrationFormView(generics.ListCreateAPIView):
     queryset = models.MemberRegistration.objects.all()
-    form = MemberRegistrationForm()
     serializer_class = MemberRegistrationSerializer
-    template_name = "member_register.html"
 
-    def post(self, request, *args, **kwargs):
-        context = {}
-        email = request.POST["email"]
-        form = MemberRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            context["message"] = "Successful"
-        else:
-            context["error"] = form.errors[next(iter(form.errors))]
-        html_template = "email_temp.html"
-        html_message = render_to_string(html_template)
-        subject = "Welcome to SPEC"
-        email_from = settings.EMAIL_HOST_USER
-        recipient_list = [email]
-        message = EmailMessage(subject, html_message, email_from, recipient_list)
-        print(message)
-        message.content_subtype = "html"
-        message.send()
-        print("email sent")
-        return render(request, "success.html", context)
+    def create(self, request):
+        data = self.get_serializer(data=request.data)
+        data.is_valid(raise_exception=True)
+        data.save()
+        return Response({"success": True})
 
 
 @api_view(["GET"])
