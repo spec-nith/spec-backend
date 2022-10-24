@@ -6,6 +6,7 @@ django-filter==21.1
 django-storages==1.12.3
 django-sslserver==0.22
 djangorestframework==3.14.0
+drf-yasg==1.21.4
 
 # Misc.
 dropbox==11.20.0
