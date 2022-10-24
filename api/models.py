@@ -1,21 +1,16 @@
 import sys
-from datetime import datetime
 from io import BytesIO
 from urllib.parse import urlparse
 from uuid import uuid4
 
+from django.conf import settings
+from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
-from django.utils.dateparse import parse_datetime
 from PIL import Image
-
-from django.core.mail import send_mass_mail
-from django.template import loader, Context
-from django.conf import settings
-from django.contrib.sites.models import Site
 
 CHOICES = (
     ("Volunteer", "Volunteer"),
@@ -42,7 +37,10 @@ DEGREE = (
 
 BRANCH = (
     ("Computer Science and Engineering", "Computer Science and Engineering"),
-    ("Electronics and Communication Engineering", "Electronics and Communication Engineering"),
+    (
+        "Electronics and Communication Engineering",
+        "Electronics and Communication Engineering",
+    ),
     ("Electrical Engineering", "Electrical Engineering"),
     ("Mechanical Engineering", "Mechanical Engineering"),
     ("Civil Engineering", "Civil Engineering"),
@@ -59,6 +57,8 @@ STATUS = (
     ("Maybe", "Maybe"),
     ("Not RSVPed Yet", "Not RSVPed Yet"),
 )
+
+
 def team_upload(instance, filename):
     ext = filename.split(".")[-1]
     return "team/{}-{}.{}".format(instance.name, uuid4().hex, ext)
@@ -252,15 +252,16 @@ class Workshop(models.Model, ResizeImageMixin):
 class Attendees(models.Model):
     name = models.CharField(max_length=60, null=False, default=None)
     email = models.EmailField()
-    workshop = models.ForeignKey(Workshop, on_delete=models.CASCADE, related_name ='attendees')
-    
+    workshop = models.ForeignKey(
+        Workshop, on_delete=models.CASCADE, related_name="attendees"
+    )
+
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name_plural = "Attendees"
-        unique_together = ('email', 'workshop')
-
+        unique_together = ("email", "workshop")
 
 
 class Gallery(models.Model, ResizeImageMixin):
@@ -364,13 +365,23 @@ class Project(models.Model, ResizeImageMixin):
     def __str__(self):
         return self.name
 
+
 class MemberRegistration(models.Model):
     name = models.CharField(max_length=50, null=False, default=None)
     email = models.EmailField(max_length=50, null=False, default=None)
-    gender = models.CharField(max_length=100, choices=GENDER_OPTIONS, null=False, default="Male")
+    gender = models.CharField(
+        max_length=100, choices=GENDER_OPTIONS, null=False, default="Male"
+    )
     roll_no = models.CharField(max_length=10, null=False, default=None)
-    degree = models.CharField(max_length=60, choices=DEGREE, null=False, default="B.Tech")
-    branch = models.CharField(max_length=60, choices=BRANCH, null=False, default="Electronics and Communication Engineering")
+    degree = models.CharField(
+        max_length=60, choices=DEGREE, null=False, default="B.Tech"
+    )
+    branch = models.CharField(
+        max_length=60,
+        choices=BRANCH,
+        null=False,
+        default="Electronics and Communication Engineering",
+    )
     year = models.PositiveIntegerField(null=True, blank=True)
     phone = models.CharField(max_length=10, null=False, default=None)
     home_state = models.CharField(max_length=50, null=False, default=None)
@@ -382,7 +393,10 @@ class MemberRegistration(models.Model):
     supporting_docs_link = models.URLField(null=True, blank=True)
     photograph_link = models.URLField(null=True, blank=True)
     sign_link = models.URLField(null=True, blank=True)
-    acknowledgement = models.BooleanField("I agree and understand the procedures of the team interviews and a thorough line of questioning. I will hold no one accountable except for myself if I fail to adhere to the rules and regulations or fail to maintain discipline during the course of the interview. I will not hold the team and any of its members accountable for any untoward happening if selected.", default=False)
+    acknowledgement = models.BooleanField(
+        "I agree and understand the procedures of the team interviews and a thorough line of questioning. I will hold no one accountable except for myself if I fail to adhere to the rules and regulations or fail to maintain discipline during the course of the interview. I will not hold the team and any of its members accountable for any untoward happening if selected.",
+        default=False,
+    )
 
     def __str__(self):
         return self.name

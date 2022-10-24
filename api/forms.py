@@ -3,17 +3,17 @@ from datetime import date
 from django import forms
 from django.forms import widgets
 
-from api.models import CHOICES
-from api.models import GENDER_OPTIONS
-from api.models import DEGREE
 from api.models import BRANCH
+from api.models import CHOICES
+from api.models import DEGREE
+from api.models import GENDER_OPTIONS
 from api.models import Alumni
+from api.models import Attendees
 from api.models import Gallery
+from api.models import MemberRegistration
 from api.models import Project
 from api.models import TeamModel
 from api.models import Workshop
-from api.models import MemberRegistration
-from api.models import Attendees
 
 
 class GalleryForm(forms.ModelForm):
@@ -344,21 +344,21 @@ class MemberRegistrationForm(forms.ModelForm):
 
     degree = forms.CharField(
         widget=forms.Select(
-            choices = DEGREE,
+            choices=DEGREE,
             attrs={
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
                 "placeholder": "Degree",
-            }
+            },
         )
     )
 
     branch = forms.CharField(
         widget=forms.Select(
-            choices = BRANCH,
+            choices=BRANCH,
             attrs={
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
                 "placeholder": "Branch",
-            }
+            },
         )
     )
 
@@ -470,12 +470,31 @@ class MemberRegistrationForm(forms.ModelForm):
                 "class": "w-72 pl-2 outline-none border-none bg-transparent",
                 "placeholder": "I agree and understand the procedures of the team interviews and a thorough line of questioning. I will hold no one accountable except for myself if I fail to adhere to the rules and regulations or fail to maintain discipline during the course of the interview. I will not hold the team and any of its members accountable for any untoward happening if selected.",
             }
-        ), 
+        ),
     )
 
     class Meta:
         model = MemberRegistration
-        fields = ["name", "email", "gender", "roll_no", "degree", "branch", "year", "phone", "home_state", "skills", "strength", "weakness", "achievement", "application_response", "supporting_docs_link", "photograph_link", "sign_link", "acknowledgement"]
+        fields = [
+            "name",
+            "email",
+            "gender",
+            "roll_no",
+            "degree",
+            "branch",
+            "year",
+            "phone",
+            "home_state",
+            "skills",
+            "strength",
+            "weakness",
+            "achievement",
+            "application_response",
+            "supporting_docs_link",
+            "photograph_link",
+            "sign_link",
+            "acknowledgement",
+        ]
 
 
 class WorkshopRegistrationForm(forms.ModelForm):
@@ -497,7 +516,15 @@ class WorkshopRegistrationForm(forms.ModelForm):
         ),
     )
 
-    workshop = forms.ModelChoiceField(queryset=Workshop.objects.all(), widget=forms.Select(attrs={"class": "w-72 pl-2 outline-none border-none bg-transparent", "placeholder": "Workshop"}))
+    workshop = forms.ModelChoiceField(
+        queryset=Workshop.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "class": "w-72 pl-2 outline-none border-none bg-transparent",
+                "placeholder": "Workshop",
+            }
+        ),
+    )
 
     class Meta:
         model = Attendees

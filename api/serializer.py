@@ -2,12 +2,12 @@ from rest_framework import serializers
 from rest_framework import viewsets
 
 from api.models import Alumni
+from api.models import Attendees
 from api.models import Gallery
+from api.models import MemberRegistration
 from api.models import Project
 from api.models import TeamModel
 from api.models import Workshop
-from api.models import MemberRegistration
-from api.models import Attendees
 
 TEAM_FIELDS = (
     "id",
@@ -61,7 +61,7 @@ MEMBER_REGISTRATION_FIELDS = (
     "phone",
     "home_state",
     "skills",
-    "strength", 
+    "strength",
     "weakness",
     "achievement",
     "application_response",
@@ -155,6 +155,7 @@ class MemberRegistrationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MemberRegistration.objects.values(*MEMBER_REGISTRATION_FIELDS)
     serializer_class = MemberRegistrationSerializer
     filterset_fields = MEMBER_REGISTRATION_FIELDS[:-10]
+
 
 class WorkshopRegistrationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
